@@ -278,14 +278,7 @@ input[type="password"]{padding-right:40px;}
 .nav-label{font-size:7px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--muted);}
 .nav-item.active .nav-label{color:var(--accent);}
 
-/* Footer */
-.app-footer{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);width:100%;max-width:500px;background:var(--surface2);border-top:1px solid var(--border);padding:12px 16px;z-index:199;}
-.footer-content{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;}
-.footer-copyright{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:0.5px;}
-.footer-links{display:flex;align-items:center;gap:8px;justify-content:center;}
-.footer-link{background:none;border:none;color:var(--accent);font-size:10px;font-weight:700;cursor:pointer;padding:0;text-decoration:none;}
-.footer-link:active{transform:scale(.95);}
-.footer-divider{color:var(--border);font-size:8px;}
+/* Footer - Removed */
 
 /* Toast - kept but never shown to users */
 .toast{position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-20px);background:var(--accent3);color:#fff;font-size:13px;font-weight:700;padding:10px 22px;border-radius:100px;opacity:0;transition:.3s;z-index:9999;pointer-events:none;}
@@ -561,9 +554,8 @@ input[type="password"]{padding-right:40px;}
       <div class="pw-strength"><div class="pw-bar" id="pw-b1"></div><div class="pw-bar" id="pw-b2"></div><div class="pw-bar" id="pw-b3"></div></div>
       <div class="field-error" id="reg-pw-err">Password must be at least 6 characters</div>
     </div>
-    <div class="field-group">
-      <label class="field-label">Referred By</label>
-      <div style="background:#fff0f4;padding:12px 14px;border-radius:8px;border:1px solid var(--border);color:var(--accent);font-weight:600;" id="reg-referrer-display">None</div>
+    <div class="field-group" style="margin-bottom:6px;">
+      <div style="font-size:8px;color:var(--muted);text-align:center;">referred by <span style="color:var(--accent);font-weight:600;" id="reg-referrer-display">None</span></div>
     </div>
     <div class="field-error" id="reg-general-err" style="text-align:center;margin-bottom:10px;font-size:12px;"></div>
     <button class="submit-btn" onclick="doRegister()">Register</button>
@@ -854,7 +846,8 @@ input[type="password"]{padding-right:40px;}
     <div class="nav-item" onclick="doLogout()"><span class="nav-icon"></span><span class="nav-label">Logout</span></div>
   </nav>
 
-  <footer class="app-footer">
+
+  <footer class="app-footer" style="display:none;">
     <div class="footer-content">
       <div class="footer-copyright">Copyright © 2026-2031 Pearl Trade</div>
       <div class="footer-links">
