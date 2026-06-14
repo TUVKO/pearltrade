@@ -594,7 +594,33 @@ input[type="password"]{padding-right:40px;}
       </div>
     </div>
 
+    <!-- Pink Stats Card -->
     <div class="section">
+      <div style="background:#ec4899;border-radius:14px;padding:12px;margin-bottom:16px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <!-- STAKE -->
+          <div style="background:rgba(255,255,255,0.2);border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:8px;font-weight:700;color:white;text-transform:uppercase;margin-bottom:6px;letter-spacing:0.5px;">STAKE</div>
+            <div style="font-size:12px;font-weight:800;color:white;" id="stat-stake-card">UGX 0</div>
+          </div>
+          <!-- BALANCE -->
+          <div style="background:rgba(255,255,255,0.2);border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:8px;font-weight:700;color:white;text-transform:uppercase;margin-bottom:6px;letter-spacing:0.5px;">BALANCE</div>
+            <div style="font-size:12px;font-weight:800;color:white;" id="stat-balance-card">UGX 0</div>
+          </div>
+          <!-- WITHDRAWN -->
+          <div style="background:rgba(255,255,255,0.2);border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:8px;font-weight:700;color:white;text-transform:uppercase;margin-bottom:6px;letter-spacing:0.5px;">WITHDRAWN</div>
+            <div style="font-size:12px;font-weight:800;color:white;" id="stat-withdrawn-card">UGX 0</div>
+          </div>
+          <!-- TOTAL EARNED -->
+          <div style="background:rgba(255,255,255,0.2);border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:8px;font-weight:700;color:white;text-transform:uppercase;margin-bottom:6px;letter-spacing:0.5px;">TOTAL EARNED</div>
+            <div style="font-size:12px;font-weight:800;color:white;" id="stat-total-earned-card">UGX 0</div>
+          </div>
+        </div>
+      </div>
+    </div>
       <!-- Row 1: Invest Button | Stake Stat -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
         <button class="action-btn" style="background:#0969da;border:none;color:white;padding:8px 12px;border-radius:12px;font-weight:600;font-size:12px;height:100%;cursor:pointer;" onclick="switchTab('deposit')">Invest</button>
@@ -1464,6 +1490,10 @@ function updateBalanceUI() {
   document.getElementById('stat-balance').textContent = fmt(balance);
   document.getElementById('stat-withdrawn').textContent = fmt(withdrawn);
   document.getElementById('stat-referral-total').textContent = fmt(totalReferralEarnings);
+  document.getElementById('stat-stake-card').textContent = fmt(stake);
+  document.getElementById('stat-balance-card').textContent = fmt(balance);
+  document.getElementById('stat-withdrawn-card').textContent = fmt(withdrawn);
+  document.getElementById('stat-total-earned-card').textContent = fmt(totalReferralEarnings);
   document.getElementById('reinvest-balance-display').textContent = fmt(balance);
   updateActiveInvestmentDisplay();
 }
