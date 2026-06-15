@@ -509,6 +509,7 @@ input[type="password"]{padding-right:40px;}
     <div class="field-error" id="login-general-err" style="text-align:center;margin-bottom:10px;font-size:12px;"></div>
     <button class="submit-btn" onclick="doLogin()">Sign In →</button>
     <div class="auth-switch">Don't have an account? <a onclick="showAuth('register-page')">Register Now</a></div>
+    <div class="auth-switch" style="margin-top:8px;"><a onclick="openForgotPasswordWhatsApp()" style="color:#10b981;cursor:pointer;">Forgot Password?</a></div>
   </div>
 </div>
 
@@ -1333,6 +1334,22 @@ function copyReferralLink() {
     linkInput.select();
     document.execCommand('copy');
     alert('Referral link copied to clipboard!');
+  }
+}
+
+async function openForgotPasswordWhatsApp() {
+  try {
+    const snap = await db.ref('settings/waSupport').get();
+    const supportLink = snap.val();
+    if (!supportLink) {
+      alert('Support WhatsApp link not configured. Please contact admin.');
+      return;
+    }
+    const message = encodeURIComponent('Hi, I forgot my password. Please help me reset it.');
+    const url = supportLink.includes('wa.me') ? `${supportLink}?text=${message}` : supportLink;
+    window.open(url, '_blank');
+  } catch (error) {
+    alert('Error opening WhatsApp. Please try again.');
   }
 }
 
