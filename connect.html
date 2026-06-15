@@ -320,9 +320,9 @@ tbody td{padding:13px 16px;font-size:13px;vertical-align:middle;}
       <div class="page-sub">Real-time platform overview</div>
       <div class="stats-row">
         <div class="stat-card"><div class="stat-card-label">Total Users</div><div class="stat-card-val green" id="d-total-users">—</div></div>
-        <div class="stat-card"><div class="stat-card-label">Total STAKE</div><div class="stat-card-val gold" id="d-total-stake">—</div></div>
-        <div class="stat-card"><div class="stat-card-label">Total BALANCE</div><div class="stat-card-val emerald" id="d-total-balance">—</div></div>
-        <div class="stat-card"><div class="stat-card-label">Total Withdrawn</div><div class="stat-card-val red" id="d-total-withdrawn">—</div></div>
+        <div class="stat-card"><div class="stat-card-label">Total Deposit</div><div class="stat-card-val gold" id="d-total-stake">—</div></div>
+        <div class="stat-card"><div class="stat-card-label">Total Balance</div><div class="stat-card-val emerald" id="d-total-balance">—</div></div>
+        <div class="stat-card"><div class="stat-card-label">Total Withdrawal</div><div class="stat-card-val red" id="d-total-withdrawn">—</div></div>
       </div>
       <div class="pct-summary" id="pct-summary"></div>
       <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
@@ -353,7 +353,7 @@ tbody td{padding:13px 16px;font-size:13px;vertical-align:middle;}
     <!-- INVESTORS (TUBE) -->
     <div class="page" id="pg-tube">
       <div class="page-title">Active Investors</div>
-      <div class="page-sub">Users who have STAKE and are earning daily profits</div>
+      <div class="page-sub">Users who have Deposit and are earning daily profits</div>
       <div class="tube-grid" id="tube-grid"><p style="color:var(--muted);font-size:13px">Loading...</p></div>
     </div>
 
@@ -412,7 +412,7 @@ tbody td{padding:13px 16px;font-size:13px;vertical-align:middle;}
     <!-- DEBIT USER -->
     <div class="page" id="pg-debit">
       <div class="page-title">Debit User</div>
-      <div class="page-sub">Deduct an amount from a user's BALANCE</div>
+      <div class="page-sub">Deduct an amount from a user's Balance</div>
       <div class="table-wrap" style="max-width:520px;">
         <div class="table-header"><div class="table-title">💳 Debit User Account</div></div>
         <div style="padding:24px;">
@@ -423,9 +423,9 @@ tbody td{padding:13px 16px;font-size:13px;vertical-align:middle;}
           <div id="debit-user-info" style="display:none;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
               <div><div style="font-size:15px;font-weight:800;" id="debit-user-name">—</div><div style="font-size:12px;color:var(--muted);" id="debit-user-phone">—</div></div>
-              <div style="text-align:right;"><div style="font-size:11px;color:var(--muted);">Current BALANCE</div><div style="font-size:18px;font-weight:800;font-family:'JetBrains Mono',monospace;" id="debit-user-balance">—</div></div>
+              <div style="text-align:right;"><div style="font-size:11px;color:var(--muted);">Current Balance</div><div style="font-size:18px;font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--accent);" id="debit-user-balance">—</div></div>
             </div>
-            <div style="font-size:11px;color:var(--muted);">STAKE: <span id="debit-user-stake">—</span></div>
+            <div style="font-size:11px;color:var(--muted);">Deposit: <span id="debit-user-stake">—</span></div>
           </div>
           <div id="debit-not-found" style="display:none;color:var(--warn);font-size:13px;margin-bottom:12px;">❌ User not found</div>
           <div style="margin-bottom:16px;"><label class="f-label">Amount to Debit (UGX)</label><input type="number" class="f-input" style="padding:11px 14px;" id="debit-amount" placeholder="Enter amount" min="1" oninput="updateDebitPreview()"></div>
@@ -446,7 +446,7 @@ tbody td{padding:13px 16px;font-size:13px;vertical-align:middle;}
     <div class="page" id="pg-sog">
       <div class="page-title">🗑️ SOG - Search & Obliterate</div>
       <div class="page-sub">Wipe user financial data (keeps account structure) - Account becomes brand new</div>
-      <div style="background:#fff0f4;border:1px solid var(--border);padding:16px;border-radius:12px;margin-bottom:20px;"><strong style="color:var(--warn);">⚠️ WARNING:</strong> This will reset ALL user financial data (STAKE, BALANCE, WITHDRAWN, transactions, active investment) to zero. The user account will look brand new but username, password, phone, country, joined date, referral list, and referrer info will remain. This cannot be undone.</div>
+      <div style="background:#fff0f4;border:1px solid var(--border);padding:16px;border-radius:12px;margin-bottom:20px;"><strong style="color:var(--warn);">⚠️ WARNING:</strong> This will reset ALL user financial data (Deposit, Balance, Withdrawal, transactions, active investment) to zero. The user account will look brand new but username, password, phone, country, joined date, referral list, and referrer info will remain. This cannot be undone.</div>
       <div style="display:flex;gap:12px;margin-bottom:20px;">
         <input type="text" class="f-input" id="sog-username-search" placeholder="Enter username to search..." oninput="searchSOGUser()" style="flex:1;padding:11px 14px;">
         <button class="btn btn-approve" onclick="clearSOGSearch()">Clear</button>
@@ -621,7 +621,7 @@ tbody td{padding:13px 16px;font-size:13px;vertical-align:middle;}
 </div>
 
 <!-- MODALS -->
-<div class="modal-ov" id="edit-modal" style="position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:none;align-items:center;justify-content:center;padding:24px;"><div class="modal-box" style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;width:100%;max-width:440px;"><div class="modal-title" style="font-family:'Playfair Display',serif;font-size:17px;font-weight:800;margin-bottom:18px;color:var(--accent);">✏️ Edit User</div><input type="hidden" id="edit-username"><div class="modal-row" style="margin-bottom:14px;"><label class="modal-label" style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block;">Password</label><input type="text" class="modal-input" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none;" id="edit-password"></div><div class="modal-row" style="margin-bottom:14px;"><label class="modal-label">Phone Number</label><input type="text" class="modal-input" id="edit-phone-modal" placeholder="+256..."></div><div class="modal-row" style="margin-bottom:14px;"><label class="modal-label">STAKE (UGX)</label><input type="number" class="modal-input" id="edit-stake" min="0"></div><div class="modal-row" style="margin-bottom:14px;"><label class="modal-label">BALANCE (UGX)</label><input type="number" class="modal-input" id="edit-balance" min="0"></div><div class="modal-actions" style="display:flex;gap:10px;margin-top:20px;justify-content:flex-end;"><button class="modal-cancel" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;" onclick="closeEditModal()">Cancel</button><button class="btn btn-save" onclick="saveEditUser()">Save Changes</button></div></div></div>
+<div class="modal-ov" id="edit-modal" style="position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:none;align-items:center;justify-content:center;padding:24px;"><div class="modal-box" style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;width:100%;max-width:440px;"><div class="modal-title" style="font-family:'Playfair Display',serif;font-size:17px;font-weight:800;margin-bottom:18px;color:var(--accent);">✏️ Edit User</div><input type="hidden" id="edit-username"><div class="modal-row" style="margin-bottom:14px;"><label class="modal-label" style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block;">Password</label><input type="text" class="modal-input" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none;" id="edit-password"></div><div class="modal-row" style="margin-bottom:14px;"><label class="modal-label">Phone Number</label><input type="text" class="modal-input" id="edit-phone-modal" placeholder="+256..."></div><div class="modal-row" style="margin-bottom:14px;"><label class="modal-label">Deposit (UGX)</label><input type="number" class="modal-input" id="edit-stake" min="0"></div><div class="modal-row" style="margin-bottom:14px;"><label class="modal-label">Balance (UGX)</label><input type="number" class="modal-input" id="edit-balance" min="0"></div><div class="modal-actions" style="display:flex;gap:10px;margin-top:20px;justify-content:flex-end;"><button class="modal-cancel" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;" onclick="closeEditModal()">Cancel</button><button class="btn btn-save" onclick="saveEditUser()">Save Changes</button></div></div></div>
 
 <div class="toast" id="toast" style="position:fixed;top:24px;right:24px;background:var(--accent3);color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;padding:12px 24px;border-radius:12px;opacity:0;transition:.3s;z-index:9999;pointer-events:none;transform:translateY(-10px);"></div>
 <div class="notif-overlay" id="notif-overlay" onclick="closeNotifDrawer()"></div>
