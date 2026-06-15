@@ -491,7 +491,7 @@ input[type="password"]{padding-right:40px;}
 <div class="auth-page" id="login-page">
   <div class="auth-hero">
     <div class="auth-brand">Pearl Trade</div>
-    <div class="auth-tagline">Grow Your Wealth Daily</div>
+    <div class="auth-tagline">Track Your Earnings</div>
   </div>
   <div class="auth-card">
     <div class="auth-title">Welcome Back</div>
@@ -516,11 +516,11 @@ input[type="password"]{padding-right:40px;}
 <div class="auth-page" id="register-page">
   <div class="auth-hero">
     <div class="auth-brand">Pearl Trade</div>
-    <div class="auth-tagline">Start Earning Today</div>
+    <div class="auth-tagline">Build Your Wealth</div>
   </div>
   <div class="auth-card">
     <div class="auth-title">Create Account</div>
-    <div class="auth-subtitle">Get UGX 4,000 registration bonus 🎁</div>
+    <div class="auth-subtitle">Join Pearl Trade and start earning</div>
     <div class="field-group">
       <label class="field-label">Username</label>
       <div class="field-wrap"><span class="field-icon">👤</span><input type="text" id="reg-username" placeholder="Choose a username"></div>
@@ -550,9 +550,8 @@ input[type="password"]{padding-right:40px;}
     </div>
     <div class="field-group">
       <label class="field-label">Password</label>
-      <div class="field-wrap"><span class="field-icon">🔒</span><input type="password" id="reg-password" placeholder="Min. 6 characters" oninput="checkStrength(this.value)"><button class="eye-btn" onclick="toggleEye('reg-password',this)">Show</button></div>
-      <div class="pw-strength"><div class="pw-bar" id="pw-b1"></div><div class="pw-bar" id="pw-b2"></div><div class="pw-bar" id="pw-b3"></div></div>
-      <div class="field-error" id="reg-pw-err">Password must be at least 6 characters</div>
+      <div class="field-wrap"><span class="field-icon">🔒</span><input type="password" id="reg-password" placeholder="Min. 4 characters"><button class="eye-btn" onclick="toggleEye('reg-password',this)">Show</button></div>
+      <div class="field-error" id="reg-pw-err">Password must be at least 4 characters</div>
     </div>
     <div class="field-group" style="margin-bottom:6px;">
       <div style="font-size:8px;color:var(--muted);text-align:center;">referred by <span style="color:var(--accent);font-weight:600;" id="reg-referrer-display">None</span></div>
@@ -2359,7 +2358,7 @@ async function doRegister() {
   if (!username) { setErr('reg-user-err', true, 'Username is required'); ok = false; }
   if (!country) { setErr('reg-country-err', true, 'Please select your country'); ok = false; }
   if (!phoneInput || phoneInput.length !== 10 || (!phoneInput.startsWith('0') && !phoneInput.startsWith('7'))) { setErr('reg-phone-err', true, 'Enter 10 digits starting with 0 or 7'); ok = false; }
-  if (!password || password.length < 6) { setErr('reg-pw-err', true, 'Password must be at least 6 characters'); ok = false; }
+  if (!password || password.length < 4) { setErr('reg-pw-err', true, 'Password must be at least 4 characters'); ok = false; }
   if (!ok) return;
   const existing = await db.ref('users/' + safeKey(username)).get();
   if (existing.exists()) { setErr('reg-user-err', true, 'Username already taken'); return; }
