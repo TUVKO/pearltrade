@@ -651,6 +651,75 @@ input[type="password"]{padding-right:40px;}
     <div class="section">
       <button class="wa-btn" onclick="openWaGroup()">💬 WhatsApp community</button>
     </div>
+
+    <!-- Live Trading Demo Section -->
+    <div class="section">
+      <div style="background:#ec4899;border:3px solid #ec4899;padding:16px;">
+        <!-- Trading Title -->
+        <div style="text-align:center;margin-bottom:14px;">
+          <div style="font-size:16px;font-weight:800;color:white;font-family:'Playfair Display',serif;">🚀 LIVE TRADING</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.9);margin-top:4px;">Real-time market activity</div>
+        </div>
+
+        <!-- Scrolling Notifications -->
+        <div style="background:#f472b6;padding:12px;margin-bottom:12px;border-radius:0;overflow:hidden;height:80px;position:relative;">
+          <div id="trade-ticker" style="animation:scroll-trades 8s linear infinite;">
+            <div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.2);color:white;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;">✅ User earned UGX 45,000 profit</div>
+            <div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.2);color:white;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;">💰 User withdrew UGX 120,000</div>
+            <div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.2);color:white;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;">📈 Trade closed with 15% profit</div>
+            <div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.2);color:white;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;">✅ User earned UGX 78,500 profit</div>
+            <div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.2);color:white;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;">💰 User invested UGX 500,000</div>
+            <div style="padding:8px 0;color:white;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;">📊 Platform earning UGX 156,000/min</div>
+          </div>
+        </div>
+
+        <!-- Daily Profit Counter -->
+        <div style="background:#f472b6;padding:12px;margin-bottom:12px;text-align:center;border-radius:0;">
+          <div style="font-size:10px;color:rgba(255,255,255,0.9);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Today's Total Profits</div>
+          <div style="font-size:24px;font-weight:800;color:white;font-family:'JetBrains Mono',monospace;" id="profit-counter">UGX 8,450,000</div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.8);margin-top:4px;">↑ Growing in real-time</div>
+        </div>
+
+        <!-- Top Earners -->
+        <div style="background:#f472b6;padding:12px;border-radius:0;">
+          <div style="font-size:11px;color:rgba(255,255,255,0.9);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;text-align:center;">Top Earners This Week</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.1);padding:8px;border-radius:0;">
+              <div style="color:white;font-size:11px;font-weight:600;">🥇 User A</div>
+              <div style="color:#fff;font-size:12px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX 850,000</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.1);padding:8px;border-radius:0;">
+              <div style="color:white;font-size:11px;font-weight:600;">🥈 User B</div>
+              <div style="color:#fff;font-size:12px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX 620,000</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.1);padding:8px;border-radius:0;">
+              <div style="color:white;font-size:11px;font-weight:600;">🥉 User C</div>
+              <div style="color:#fff;font-size:12px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX 445,000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      @keyframes scroll-trades {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-200px); }
+      }
+    </style>
+
+    <script>
+      // Fake profit counter animation
+      function animateProfitCounter() {
+        const counter = document.getElementById('profit-counter');
+        let currentValue = 8450000;
+        setInterval(() => {
+          currentValue += Math.floor(Math.random() * 50000);
+          counter.textContent = 'UGX ' + currentValue.toLocaleString();
+        }, 2000);
+      }
+      animateProfitCounter();
+    </script>
   </div>
 
   <!-- History - New Card Design -->
