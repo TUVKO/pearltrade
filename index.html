@@ -680,7 +680,10 @@ input[type="password"]{padding-right:40px;}
       </div>
     </div>
     <div class="section">
-      <button class="wa-btn" onclick="openWaGroup()">💬 WhatsApp community</button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <button class="wa-btn" onclick="openWaGroup('A')" style="margin:0;">💬 Group-A</button>
+        <button class="wa-btn" onclick="openWaGroup('B')" style="margin:0;">💬 Group-B</button>
+      </div>
     </div>
 
     <!-- Live Trading Demo Section -->
@@ -1261,7 +1264,7 @@ let currentUser = null;
 let currentUsername = null;
 let settingsData = {
   uraTax: 4, withdrawCharge: 10, refL1: 10, refL2: 4, refL3: 2,
-  waGroup: '', waSupport: '', withdrawLocked: false, withdrawApproval: false,
+  waGroup: '', waGroupA: '', waGroupB: '', waSupport: '', withdrawLocked: false, withdrawApproval: false,
   minDeposit: 10000, maxDeposit: 5000000, minWithdraw: 10000, waNumber: '700000000', marzApiKey: ''
 };
 let profitInterval = null;
@@ -1583,9 +1586,16 @@ function copyRef() {
   }
 }
 
-function openWaGroup() {
-  if (settingsData.waGroup) window.open(settingsData.waGroup, '_blank');
-  // No modal - just silent fail
+function openWaGroup(group) {
+  if (group === 'A' && settingsData.waGroupA) {
+    window.open(settingsData.waGroupA, '_blank');
+  } else if (group === 'B' && settingsData.waGroupB) {
+    window.open(settingsData.waGroupB, '_blank');
+  } else if (group === 'A') {
+    alert('Group-A link not configured. Please contact admin.');
+  } else if (group === 'B') {
+    alert('Group-B link not configured. Please contact admin.');
+  }
 }
 
 function showAuth(id) {

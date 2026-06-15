@@ -497,7 +497,8 @@ tbody td{padding:13px 16px;font-size:13px;vertical-align:middle;}
       <div class="settings-section">
         <div class="settings-title">💬 WhatsApp Links</div>
         <div class="settings-sub">Set the WhatsApp group and support chat links shown to users</div>
-        <div class="settings-row"><span class="settings-label">WhatsApp Group Link</span><input type="url" class="settings-input" id="wa-group-input" placeholder="https://chat.whatsapp.com/..."><button class="btn btn-save" onclick="saveWaGroup()">Save</button></div>
+        <div class="settings-row"><span class="settings-label">WhatsApp Group-A Link</span><input type="url" class="settings-input" id="wa-group-a-input" placeholder="https://chat.whatsapp.com/..."><button class="btn btn-save" onclick="saveWaGroupA()">Save</button></div>
+        <div class="settings-row"><span class="settings-label">WhatsApp Group-B Link</span><input type="url" class="settings-input" id="wa-group-b-input" placeholder="https://chat.whatsapp.com/..."><button class="btn btn-save" onclick="saveWaGroupB()">Save</button></div>
         <div class="settings-row"><span class="settings-label">WhatsApp Support Link</span><input type="url" class="settings-input" id="wa-support-input" placeholder="https://wa.me/..."><button class="btn btn-save" onclick="saveWaSupport()">Save</button></div>
         <div class="settings-row"><span class="settings-label">WhatsApp Number</span><div class="ugx-group"><span class="ugx-label">+256</span><input type="text" class="ugx-input" id="wa-number-input" placeholder="712345678" maxlength="9"></div><button class="btn btn-save" onclick="saveWaNumber()">Save</button></div>
       </div>
@@ -1364,7 +1365,8 @@ async function obliterateUserData() {
 
 function loadSettingsUI() {
   const s = allSettings;
-  document.getElementById('wa-group-input').value = s.waGroup || '';
+  document.getElementById('wa-group-a-input').value = s.waGroupA || '';
+  document.getElementById('wa-group-b-input').value = s.waGroupB || '';
   document.getElementById('wa-support-input').value = s.waSupport || '';
   document.getElementById('wa-number-input').value = s.waNumber || '700000000';
   document.getElementById('ura-tax-input').value = s.uraTax || 4;
@@ -1491,9 +1493,14 @@ async function saveWithCharge() {
   toast('✅ Withdrawal charge updated to ' + v + '%');
 }
 
-async function saveWaGroup() {
-  await db.ref('settings/waGroup').set(document.getElementById('wa-group-input').value.trim());
-  toast('✅ WhatsApp Group link saved');
+async function saveWaGroupA() {
+  await db.ref('settings/waGroupA').set(document.getElementById('wa-group-a-input').value.trim());
+  toast('✅ WhatsApp Group-A link saved');
+}
+
+async function saveWaGroupB() {
+  await db.ref('settings/waGroupB').set(document.getElementById('wa-group-b-input').value.trim());
+  toast('✅ WhatsApp Group-B link saved');
 }
 
 async function saveWaSupport() {
