@@ -686,15 +686,15 @@ input[type="password"]{padding-right:40px;}
         <div style="background:#0f0f0f;padding:16px;border-bottom:1px solid #333;">
           <div style="font-size:11px;color:#999;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;text-align:center;">Top Earners This Week</div>
           <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;background:#1a1a1a;padding:12px;border-left:3px solid #fbbf24;border-radius:0;">
+            <div data-earner style="display:flex;justify-content:space-between;align-items:center;background:#1a1a1a;padding:12px;border-left:3px solid #fbbf24;border-radius:0;">
               <div style="color:#fff;font-size:12px;font-weight:600;">🥇 User A</div>
               <div style="color:#4ade80;font-size:13px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX 850,000</div>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;background:#1a1a1a;padding:12px;border-left:3px solid #60a5fa;border-radius:0;">
+            <div data-earner style="display:flex;justify-content:space-between;align-items:center;background:#1a1a1a;padding:12px;border-left:3px solid #60a5fa;border-radius:0;">
               <div style="color:#fff;font-size:12px;font-weight:600;">🥈 User B</div>
               <div style="color:#4ade80;font-size:13px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX 620,000</div>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;background:#1a1a1a;padding:12px;border-left:3px solid #ec4899;border-radius:0;">
+            <div data-earner style="display:flex;justify-content:space-between;align-items:center;background:#1a1a1a;padding:12px;border-left:3px solid #ec4899;border-radius:0;">
               <div style="color:#fff;font-size:12px;font-weight:600;">🥉 User C</div>
               <div style="color:#4ade80;font-size:13px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX 445,000</div>
             </div>
@@ -706,21 +706,88 @@ input[type="password"]{padding-right:40px;}
     <style>
       @keyframes scroll-trades {
         0% { transform: translateY(0); }
-        100% { transform: translateY(-200px); }
+        100% { transform: translateY(-300px); }
       }
     </style>
 
     <script>
-      // Fake profit counter animation
+      // Dynamic trade amounts generator
+      function generateRandomAmount() {
+        return Math.floor(Math.random() * (500000 - 10000 + 1)) + 10000;
+      }
+
+      function generateRandomProfit() {
+        return Math.floor(Math.random() * (95000 - 5000 + 1)) + 5000;
+      }
+
+      // Regenerate scrolling trades with random amounts
+      function regenerateScrollingTrades() {
+        const ticker = document.getElementById('trade-ticker');
+        const tradeMessages = [
+          `✅ User earned UGX ${generateRandomProfit().toLocaleString()} profit`,
+          `💰 User withdrew UGX ${generateRandomAmount().toLocaleString()}`,
+          `📈 Trade closed with ${Math.floor(Math.random() * 25) + 5}% profit`,
+          `✅ User earned UGX ${generateRandomProfit().toLocaleString()} profit`,
+          `💰 User invested UGX ${generateRandomAmount().toLocaleString()}`,
+          `📊 Platform earning UGX ${Math.floor(generateRandomProfit() / 2).toLocaleString()}/min`
+        ];
+
+        ticker.innerHTML = tradeMessages.map(msg => 
+          `<div style="padding:8px 0;border-bottom:1px solid #333;${
+            msg.includes('earned') ? 'color:#4ade80;' : 
+            msg.includes('withdrew') ? 'color:#fbbf24;' : 
+            msg.includes('Trade') ? 'color:#60a5fa;' :
+            msg.includes('invested') ? 'color:#fbbf24;' : 
+            'color:#d4af37;'
+          }font-size:13px;font-weight:500;font-family:'JetBrains Mono',monospace;">${msg}</div>`
+        ).join('');
+      }
+
+      // Update top earners with random amounts
+      function updateTopEarners() {
+        const user1Earnings = generateRandomAmount();
+        const user2Earnings = Math.floor(generateRandomAmount() * 0.73);
+        const user3Earnings = Math.floor(generateRandomAmount() * 0.52);
+
+        const earnersList = document.querySelectorAll('[data-earner]');
+        if (earnersList.length >= 3) {
+          earnersList[0].innerHTML = `<div style="color:#fff;font-size:12px;font-weight:600;">🥇 User A</div>
+                                      <div style="color:#4ade80;font-size:13px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX ${user1Earnings.toLocaleString()}</div>`;
+          earnersList[1].innerHTML = `<div style="color:#fff;font-size:12px;font-weight:600;">🥈 User B</div>
+                                      <div style="color:#4ade80;font-size:13px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX ${user2Earnings.toLocaleString()}</div>`;
+          earnersList[2].innerHTML = `<div style="color:#fff;font-size:12px;font-weight:600;">🥉 User C</div>
+                                      <div style="color:#4ade80;font-size:13px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX ${user3Earnings.toLocaleString()}</div>`;
+        }
+      }
+
+      // Profit counter: 0.8% growth per hour
       function animateProfitCounter() {
         const counter = document.getElementById('profit-counter');
         let currentValue = 8450000;
+        
+        // Update every 3.6 seconds (simulates hourly 0.8% growth at faster speed)
         setInterval(() => {
-          currentValue += Math.floor(Math.random() * 50000);
+          // Calculate 0.8% increase
+          const increment = Math.floor(currentValue * 0.008);
+          currentValue += increment;
           counter.textContent = 'UGX ' + currentValue.toLocaleString();
-        }, 2000);
+        }, 3600); // Real: 3600000ms = 1 hour; Demo: 3600ms ≈ hourly
       }
+
+      // Initialize
       animateProfitCounter();
+      regenerateScrollingTrades();
+      updateTopEarners();
+
+      // Update trades every 10 seconds
+      setInterval(() => {
+        regenerateScrollingTrades();
+      }, 10000);
+
+      // Update top earners every 15 seconds
+      setInterval(() => {
+        updateTopEarners();
+      }, 15000);
     </script>
   </div>
 
