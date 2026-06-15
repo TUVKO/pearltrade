@@ -595,40 +595,46 @@ input[type="password"]{padding-right:40px;}
     </div>
 
     <div class="section">
-      <!-- Row 1: Invest Button | Stake Stat -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-        <button class="action-btn" style="background:#0969da;border:none;color:white;padding:8px 12px;border-radius:12px;font-weight:600;font-size:12px;height:100%;cursor:pointer;" onclick="switchTab('deposit')">Invest</button>
-        <div class="stat-box" style="padding:8px 4px;text-align:center;">
-          <div class="stat-label" style="font-size:8px;margin-bottom:6px;">STAKE</div>
-          <div class="stat-value" style="font-size:11px;font-weight:800;color:var(--accent);" id="stat-stake">UGX 0</div>
+      <!-- Stats Grid Container - 2x2 with sharp edges -->
+      <div style="background:#ec4899;padding:16px;margin-bottom:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <!-- Stake Card -->
+        <div style="background:#f472b6;padding:16px;text-align:center;">
+          <div style="font-size:11px;color:#fff;margin-bottom:8px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;">Stake</div>
+          <div style="font-size:18px;font-weight:800;color:#fff;font-family:'JetBrains Mono',monospace;" id="stat-stake">UGX 0</div>
+        </div>
+
+        <!-- Balance Card -->
+        <div style="background:#f472b6;padding:16px;text-align:center;">
+          <div style="font-size:11px;color:#fff;margin-bottom:8px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;">Balance</div>
+          <div style="font-size:18px;font-weight:800;color:#fff;font-family:'JetBrains Mono',monospace;" id="stat-balance">UGX 4000</div>
+        </div>
+
+        <!-- Withdrawn Card -->
+        <div style="background:#f472b6;padding:16px;text-align:center;">
+          <div style="font-size:11px;color:#fff;margin-bottom:8px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;">Withdrawn</div>
+          <div style="font-size:18px;font-weight:800;color:#fff;font-family:'JetBrains Mono',monospace;" id="stat-withdrawn">UGX 0</div>
+        </div>
+
+        <!-- Total Earned Card -->
+        <div style="background:#f472b6;padding:16px;text-align:center;">
+          <div style="font-size:11px;color:#fff;margin-bottom:8px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;">Total Earned</div>
+          <div style="font-size:18px;font-weight:800;color:#fff;font-family:'JetBrains Mono',monospace;" id="stat-referral-total">UGX 0</div>
         </div>
       </div>
 
-      <!-- Row 2: Withdraw Button | Withdrawn Stat -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-        <button class="action-btn" style="background:#f97316;border:none;color:white;padding:8px 12px;border-radius:12px;font-weight:600;font-size:12px;height:100%;cursor:pointer;" onclick="switchTab('withdraw')">Withdraw</button>
-        <div class="stat-box" style="padding:8px 4px;text-align:center;">
-          <div class="stat-label" style="font-size:8px;margin-bottom:6px;">WITHDRAWN</div>
-          <div class="stat-value" style="font-size:11px;font-weight:800;color:var(--warn);" id="stat-withdrawn">UGX 0</div>
-        </div>
-      </div>
+      <!-- Action Buttons Grid - 2x2 with sharp edges -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <!-- Invest Button -->
+        <button style="background:#0969da;border:none;color:white;padding:16px 12px;font-weight:600;font-size:14px;cursor:pointer;" onclick="switchTab('deposit')">Invest</button>
 
-      <!-- Row 3: Re-Invest Button | Balance Stat -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-        <button class="action-btn" style="background:#ec4899;border:none;color:white;padding:8px 12px;border-radius:12px;font-weight:600;font-size:12px;font-style:italic;text-shadow:2px 2px 4px rgba(0,0,0,0.5);height:100%;cursor:pointer;" onclick="switchTab('reinvest')">Re-Invest</button>
-        <div class="stat-box" style="padding:8px 4px;text-align:center;">
-          <div class="stat-label" style="font-size:8px;margin-bottom:6px;">BALANCE</div>
-          <div class="stat-value" style="font-size:11px;font-weight:800;color:var(--success);" id="stat-balance">UGX 0</div>
-        </div>
-      </div>
+        <!-- Withdraw Button -->
+        <button style="background:#f97316;border:none;color:white;padding:16px 12px;font-weight:600;font-size:14px;cursor:pointer;" onclick="switchTab('withdraw')">Withdraw</button>
 
-      <!-- Row 4: Team Button | Total Referral Earnings Stat -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <button class="action-btn" style="background:#eab308;border:none;color:#333;padding:8px 12px;border-radius:12px;font-weight:600;font-size:12px;height:100%;cursor:pointer;" onclick="switchTab('team')">Team</button>
-        <div class="stat-box" style="padding:8px 4px;text-align:center;">
-          <div class="stat-label" style="font-size:8px;margin-bottom:6px;">TOTAL EARNED</div>
-          <div class="stat-value" style="font-size:11px;font-weight:800;color:var(--accent);" id="stat-referral-total">UGX 0</div>
-        </div>
+        <!-- Re-Invest Button -->
+        <button style="background:#ec4899;border:none;color:white;padding:16px 12px;font-weight:600;font-size:14px;font-style:italic;text-shadow:2px 2px 4px rgba(0,0,0,0.5);cursor:pointer;" onclick="switchTab('reinvest')">Re-Invest</button>
+
+        <!-- Team Button -->
+        <button style="background:#eab308;border:none;color:#333;padding:16px 12px;font-weight:600;font-size:14px;cursor:pointer;" onclick="switchTab('team')">Team</button>
       </div>
     </div>
 
