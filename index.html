@@ -578,7 +578,7 @@ input[type="password"]{padding-right:40px;}
   <div class="dash-section active" id="sec-home">
     <!-- Greeting Message -->
     <div class="section">
-      <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px;text-align:left;" id="greeting-full">Good morning, Lowan</div>
+      <div style="background:#ec4899;border:none;border-radius:0;padding:16px;font-size:18px;font-weight:700;color:white;margin-bottom:16px;text-align:left;" id="greeting-full">Welcome back, Lowan</div>
     </div>
 
     <!-- Referral Box at Top -->
@@ -1265,21 +1265,10 @@ async function calculateAndPayDailyProfits() {
 // Loading screen hides immediately after login check
 // ============================================================
 function updateGreeting() {
-  const hour = new Date().getHours();
-  let greeting = 'Good morning';
-  
-  if (hour >= 12 && hour < 18) {
-    greeting = 'Good afternoon';
-  } else if (hour >= 18 && hour < 24) {
-    greeting = 'Good evening';
-  } else if (hour >= 0 && hour < 6) {
-    greeting = 'Good night';
-  }
-  
-  const username = currentUsername || 'there';
+  const username = currentUsername || 'User';
   const greetingEl = document.getElementById('greeting-full');
   if (greetingEl) {
-    greetingEl.textContent = greeting + ', ' + username;
+    greetingEl.textContent = 'Welcome back, ' + username;
   }
 }
 
