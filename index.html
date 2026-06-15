@@ -1954,9 +1954,9 @@ function renderTeam() {
   }
   if (membersWrap) {
     membersWrap.innerHTML = '<div class="ref-members-list">' + refs.map((r) => {
-      const isActive = (r.invested || 0) > 0;
-      const statusIcon = isActive ? '🟢' : '⏳';
-      return `<div class="ref-member-item"><div class="ref-member-name">${r.username}</div><div class="ref-member-info"><span class="ref-member-level">L${r.level}</span><span class="ref-member-status">${statusIcon} ${isActive ? 'Active' : 'Inactive'}</span></div></div>`;
+      const invested = r.invested || 0;
+      const earned = r.bonus || 0;
+      return `<div class="ref-member-item"><div class="ref-member-name">${r.username}</div><div class="ref-member-info"><span class="ref-member-level">L${r.level}</span><span class="ref-member-invested">${fmt(invested)}</span><span class="ref-member-earned">${fmt(earned)}</span></div></div>`;
     }).join('') + '</div>';
   }
 }
