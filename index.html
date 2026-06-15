@@ -654,47 +654,49 @@ input[type="password"]{padding-right:40px;}
 
     <!-- Live Trading Demo Section -->
     <div class="section">
-      <div style="background:#ec4899;border:3px solid #ec4899;padding:16px;">
-        <!-- Trading Title -->
-        <div style="text-align:center;margin-bottom:14px;">
-          <div style="font-size:16px;font-weight:800;color:white;font-family:'Playfair Display',serif;">🚀 LIVE TRADING</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.9);margin-top:4px;">Real-time market activity</div>
+      <div style="background:#1a1a1a;border:1px solid #333;padding:0;overflow:hidden;">
+        <!-- Trading Header -->
+        <div style="background:linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);padding:16px;border-bottom:1px solid #333;">
+          <div style="text-align:center;">
+            <div style="font-size:18px;font-weight:800;color:#d4af37;font-family:'Playfair Display',serif;margin-bottom:4px;">🚀 LIVE TRADING</div>
+            <div style="font-size:12px;color:#888;margin-top:2px;">Real-time market activity</div>
+          </div>
         </div>
 
         <!-- Scrolling Notifications -->
-        <div style="background:#f472b6;padding:12px;margin-bottom:12px;border-radius:0;overflow:hidden;height:80px;position:relative;">
+        <div style="background:#0f0f0f;padding:14px;border-bottom:1px solid #333;overflow:hidden;height:90px;position:relative;">
           <div id="trade-ticker" style="animation:scroll-trades 8s linear infinite;">
-            <div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.2);color:white;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;">✅ User earned UGX 45,000 profit</div>
-            <div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.2);color:white;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;">💰 User withdrew UGX 120,000</div>
-            <div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.2);color:white;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;">📈 Trade closed with 15% profit</div>
-            <div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.2);color:white;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;">✅ User earned UGX 78,500 profit</div>
-            <div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.2);color:white;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;">💰 User invested UGX 500,000</div>
-            <div style="padding:8px 0;color:white;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;">📊 Platform earning UGX 156,000/min</div>
+            <div style="padding:8px 0;border-bottom:1px solid #333;color:#4ade80;font-size:13px;font-weight:500;font-family:'JetBrains Mono',monospace;">✅ User earned UGX 45,000 profit</div>
+            <div style="padding:8px 0;border-bottom:1px solid #333;color:#fbbf24;font-size:13px;font-weight:500;font-family:'JetBrains Mono',monospace;">💰 User withdrew UGX 120,000</div>
+            <div style="padding:8px 0;border-bottom:1px solid #333;color:#60a5fa;font-size:13px;font-weight:500;font-family:'JetBrains Mono',monospace;">📈 Trade closed with 15% profit</div>
+            <div style="padding:8px 0;border-bottom:1px solid #333;color:#4ade80;font-size:13px;font-weight:500;font-family:'JetBrains Mono',monospace;">✅ User earned UGX 78,500 profit</div>
+            <div style="padding:8px 0;border-bottom:1px solid #333;color:#fbbf24;font-size:13px;font-weight:500;font-family:'JetBrains Mono',monospace;">💰 User invested UGX 500,000</div>
+            <div style="padding:8px 0;color:#d4af37;font-size:13px;font-weight:500;font-family:'JetBrains Mono',monospace;">📊 Platform earning UGX 156,000/min</div>
           </div>
         </div>
 
         <!-- Daily Profit Counter -->
-        <div style="background:#f472b6;padding:12px;margin-bottom:12px;text-align:center;border-radius:0;">
-          <div style="font-size:10px;color:rgba(255,255,255,0.9);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Today's Total Profits</div>
-          <div style="font-size:24px;font-weight:800;color:white;font-family:'JetBrains Mono',monospace;" id="profit-counter">UGX 8,450,000</div>
-          <div style="font-size:9px;color:rgba(255,255,255,0.8);margin-top:4px;">↑ Growing in real-time</div>
+        <div style="background:#0f0f0f;padding:16px;border-bottom:1px solid #333;text-align:center;border-left:3px solid #d4af37;">
+          <div style="font-size:11px;color:#999;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Today's Total Profits</div>
+          <div style="font-size:28px;font-weight:800;color:#d4af37;font-family:'JetBrains Mono',monospace;" id="profit-counter">UGX 8,450,000</div>
+          <div style="font-size:10px;color:#666;margin-top:6px;">↑ Growing in real-time</div>
         </div>
 
         <!-- Top Earners -->
-        <div style="background:#f472b6;padding:12px;border-radius:0;">
-          <div style="font-size:11px;color:rgba(255,255,255,0.9);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;text-align:center;">Top Earners This Week</div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.1);padding:8px;border-radius:0;">
-              <div style="color:white;font-size:11px;font-weight:600;">🥇 User A</div>
-              <div style="color:#fff;font-size:12px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX 850,000</div>
+        <div style="background:#0f0f0f;padding:16px;border-bottom:1px solid #333;">
+          <div style="font-size:11px;color:#999;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;text-align:center;">Top Earners This Week</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;background:#1a1a1a;padding:12px;border-left:3px solid #fbbf24;border-radius:0;">
+              <div style="color:#fff;font-size:12px;font-weight:600;">🥇 User A</div>
+              <div style="color:#4ade80;font-size:13px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX 850,000</div>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.1);padding:8px;border-radius:0;">
-              <div style="color:white;font-size:11px;font-weight:600;">🥈 User B</div>
-              <div style="color:#fff;font-size:12px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX 620,000</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;background:#1a1a1a;padding:12px;border-left:3px solid #60a5fa;border-radius:0;">
+              <div style="color:#fff;font-size:12px;font-weight:600;">🥈 User B</div>
+              <div style="color:#4ade80;font-size:13px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX 620,000</div>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.1);padding:8px;border-radius:0;">
-              <div style="color:white;font-size:11px;font-weight:600;">🥉 User C</div>
-              <div style="color:#fff;font-size:12px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX 445,000</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;background:#1a1a1a;padding:12px;border-left:3px solid #ec4899;border-radius:0;">
+              <div style="color:#fff;font-size:12px;font-weight:600;">🥉 User C</div>
+              <div style="color:#4ade80;font-size:13px;font-weight:800;font-family:'JetBrains Mono',monospace;">+UGX 445,000</div>
             </div>
           </div>
         </div>
