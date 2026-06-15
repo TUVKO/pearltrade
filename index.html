@@ -872,7 +872,7 @@ input[type="password"]{padding-right:40px;}
 
   <!-- Returns Plan -->
   <div class="dash-section" id="sec-plan">
-    <div class="inner-header"><span style="font-size:22px">🎯</span><div><div class="inner-title">RETURNS</div><div class="inner-sub">10% daily for 87 days (870% total)</div></div></div>
+    <div class="inner-header"><span style="font-size:22px">🎯</span><div><div class="inner-title">INVESTMENT PLAN</div><div class="inner-sub">Maximize your wealth with daily returns</div></div></div>
     <div class="section">
       <div class="plan-wrap">
         <div class="plan-header-new">Growth Plan</div>
@@ -893,6 +893,39 @@ input[type="password"]{padding-right:40px;}
               <tr><td>20,000,000</td><td>2,000,000</td><td>174,000,000</td></tr>
             </tbody>
            </table>
+        </div>
+      </div>
+
+      <!-- Referral Program Section -->
+      <div style="background:#10b981;border:none;border-radius:0;padding:16px;margin-top:12px;">
+        <div style="text-align:center;margin-bottom:12px;">
+          <div style="font-size:14px;font-weight:800;color:white;margin-bottom:4px;">Build your network, grow your wealth</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.9);">Earn commissions from your referrals</div>
+        </div>
+
+        <!-- Referral Levels -->
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.15);padding:10px;border-radius:0;">
+            <div style="color:white;font-size:12px;font-weight:700;">Level 1</div>
+            <div style="color:#fff;font-size:12px;font-weight:800;">10% Commission</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.15);padding:10px;border-radius:0;">
+            <div style="color:white;font-size:12px;font-weight:700;">Level 2</div>
+            <div style="color:#fff;font-size:12px;font-weight:800;">5% Commission</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.15);padding:10px;border-radius:0;">
+            <div style="color:white;font-size:12px;font-weight:700;">Level 3</div>
+            <div style="color:#fff;font-size:12px;font-weight:800;">1% Commission</div>
+          </div>
+        </div>
+
+        <!-- Referral Link -->
+        <div style="background:rgba(255,255,255,0.1);padding:10px;border-radius:0;margin-top:8px;">
+          <div style="font-size:9px;color:rgba(255,255,255,0.8);margin-bottom:6px;text-transform:uppercase;font-weight:700;">Your Referral Link</div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <input type="text" id="referral-link-display" readonly style="flex:1;background:#ffffff;border:none;padding:8px;font-size:10px;font-family:'Courier New',Courier,monospace;color:#333;border-radius:0;" value="">
+            <button style="background:#ffffff;border:none;padding:8px 12px;font-size:10px;font-weight:700;color:#10b981;cursor:pointer;border-radius:0;" onclick="copyReferralLink()">Copy</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1295,6 +1328,15 @@ function updateTime() {
   }
 }
 
+function copyReferralLink() {
+  const linkInput = document.getElementById('referral-link-display');
+  if (linkInput && linkInput.value) {
+    linkInput.select();
+    document.execCommand('copy');
+    alert('Referral link copied to clipboard!');
+  }
+}
+
 // Update time every minute
 setInterval(updateTime, 60000);
 
@@ -1679,6 +1721,7 @@ function updateReferralLink() {
   const refLink = siteBase + '?ref=' + encodeURIComponent(currentUser.username);
   document.getElementById('ref-url').textContent = refLink;
   document.getElementById('ref-url-new').value = refLink;
+  document.getElementById('referral-link-display').value = refLink;
 }
 
 function updateProfileUI() {
