@@ -103,7 +103,7 @@ input[type="password"]{padding-right:40px;}
 .phone-prefix-wrap input:focus{border:none;}
 
 /* Dashboard */
-.dashboard-page{display:none;min-height:100vh;padding-bottom:90px;position:relative;z-index:1;}
+.dashboard-page{display:none;min-height:100vh;padding-bottom:90px;position:relative;z-index:10000;}
 .dashboard-page.active{display:block;}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 12px;background:var(--bg);position:sticky;top:0;z-index:100;}
 .topbar-left{display:flex;align-items:center;gap:12px;}
@@ -994,7 +994,7 @@ input[type="password"]{padding-right:40px;}
 
   <!-- Deposit -->
   <div class="dash-section" id="sec-deposit">
-    <div class="inner-header"><span style="font-size:22px">💳</span><div><div class="inner-title">Invest</div><div class="inner-sub">Add funds to your stake</div></div></div>
+    <div class="inner-header"><span style="font-size:22px">??</span><div><div class="inner-title">Invest</div><div class="inner-sub">Add funds to your stake</div></div></div>
     <div class="section">
       <div class="action-card">
         <div class="deposit-note" id="dep-min-note" style="font-size:10px;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.3);color:#047857;border-left:3px solid #10b981;padding:8px;">Per transaction limits: UGX 10,000 minimum — UGX 5,000,000 maximum (4% URA tax)</div>
@@ -1404,19 +1404,19 @@ async function initApp() {
   updateGreeting();
   
   // STEP 1: Check if user is already logged in
-  const savedUser = sessionStorage.getItem('cr_current_user');
+  const savedUser = localStorage.getItem('cr_current_user');
   
   if (savedUser) {
     // CHECK IF SESSION EXPIRED DUE TO INACTIVITY (5 hours)
-    const lastActivity = sessionStorage.getItem(LAST_ACTIVITY_KEY);
+    const lastActivity = localStorage.getItem(LAST_ACTIVITY_KEY);
     const currentTime = Date.now();
     
     if (lastActivity) {
       const inactiveTime = currentTime - parseInt(lastActivity);
       if (inactiveTime > INACTIVITY_LIMIT) {
         // Session expired due to inactivity - auto logout
-        sessionStorage.removeItem('cr_current_user');
-        sessionStorage.removeItem(LAST_ACTIVITY_KEY);
+        localStorage.removeItem('cr_current_user');
+        localStorage.removeItem(LAST_ACTIVITY_KEY);
         handleAuthPageSelection();
         document.getElementById('loading-screen').style.display = 'none';
         return;
@@ -1457,18 +1457,20 @@ async function initApp() {
         cleanupOldNotifications();
         setInterval(cleanupOldNotifications, 60 * 60 * 1000);
         
-        // HIDE LOADING SCREEN AFTER DASHBOARD IS READY
-        document.getElementById('loading-screen').style.display = 'none';
+        // HIDE LOADING SCREEN AFTER A BRIEF MOMENT TO ENSURE DASHBOARD RENDERS
+        setTimeout(() => {
+          document.getElementById('loading-screen').style.display = 'none';
+        }, 100);
       } else {
-        sessionStorage.removeItem('cr_current_user');
-        sessionStorage.removeItem(LAST_ACTIVITY_KEY);
+        localStorage.removeItem('cr_current_user');
+        localStorage.removeItem(LAST_ACTIVITY_KEY);
         handleAuthPageSelection();
         document.getElementById('loading-screen').style.display = 'none';
       }
     } catch (err) {
       console.warn('Login check error:', err);
-      sessionStorage.removeItem('cr_current_user');
-      sessionStorage.removeItem(LAST_ACTIVITY_KEY);
+      localStorage.removeItem('cr_current_user');
+      localStorage.removeItem(LAST_ACTIVITY_KEY);
       handleAuthPageSelection();
       document.getElementById('loading-screen').style.display = 'none';
     }
@@ -1596,7 +1598,12 @@ function showAuth(id) {
 }
 
 function showDashboard() {
-  document.querySelectorAll('.auth-page').forEach(p => { p.classList.remove('active'); p.style.display = 'none'; });
+  document.querySelectorAll('.auth-page').forEach(p => { 
+    p.classList.remove('active'); 
+    p.style.display = 'none !important'; 
+    p.style.visibility = 'hidden';
+    p.style.pointerEvents = 'none';
+  });
   document.getElementById('dashboard-page').style.display = 'block';
   document.getElementById('dashboard-page').classList.add('active');
 }
@@ -2419,7 +2426,7 @@ async function doLogin() {
     if (userData.locked) { setErr('login-general-err', true, '🔒 Your account has been locked. Contact support.'); return; }
     currentUser = userData;
     currentUsername = username;
-    sessionStorage.setItem('cr_current_user', username);
+    localStorage.setItem('cr_current_user', username);
     
     // PROFIT CALCULATION FIRST - before UI updates
     await calculateAndPayDailyProfits().catch(err => console.warn('Login profit error:', err));
@@ -2495,7 +2502,7 @@ async function doRegister() {
       }
     }
   }
-  sessionStorage.setItem('cr_current_user', username);
+  localStorage.setItem('cr_current_user', username);
   updateBalanceUI();
   renderHistory();
   renderTeam();
@@ -2516,8 +2523,8 @@ async function doLogout() {
   if (profitInterval) clearInterval(profitInterval);
   if (userListener && currentUsername) db.ref('users/' + safeKey(currentUsername)).off('value', userListener);
   if (inactivityTimer) clearTimeout(inactivityTimer);
-  sessionStorage.removeItem('cr_current_user');
-  sessionStorage.removeItem(LAST_ACTIVITY_KEY);
+  localStorage.removeItem('cr_current_user');
+  localStorage.removeItem(LAST_ACTIVITY_KEY);
   currentUser = null;
   currentUsername = null;
   closeMenu();
@@ -2536,7 +2543,7 @@ const LAST_ACTIVITY_KEY = 'cr_last_activity';
 
 function updateLastActivityTime() {
   if (!currentUser) return;
-  sessionStorage.setItem(LAST_ACTIVITY_KEY, Date.now().toString());
+  localStorage.setItem(LAST_ACTIVITY_KEY, Date.now().toString());
 }
 
 function resetInactivityTimer() {
