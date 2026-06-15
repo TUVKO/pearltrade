@@ -1000,13 +1000,13 @@ input[type="password"]{padding-right:40px;}
       <div class="action-card">
         <div class="deposit-note" id="dep-min-note" style="font-size:10px;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.3);color:#047857;border-left:3px solid #10b981;padding:8px;">Per transaction limits: UGX 10,000 minimum — UGX 5,000,000 maximum (4% URA tax)</div>
         <div class="field-group">
-          <label class="field-label" style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.3px;">Phone (+256) 712***122</label>
+          <label class="field-label" style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.3px;">Phone Number</label>
+          <div style="font-size:10px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);border-radius:3px;padding:8px;margin-bottom:8px;color:#047857;">Enter mobile number you're using to pay eg <span id="dep-phone-example">0712345678</span></div>
           <div class="phone-prefix-wrap" id="dep-phone-wrap" style="display:flex;gap:6px;">
-            <div class="phone-prefix-badge" id="dep-prefix" style="width:50px;padding:7px;background:white;border:1px solid #ccc;border-radius:3px;font-size:12px;display:flex;align-items:center;justify-content:center;">+256</div>
-            <input type="tel" id="dep-phone" maxlength="9" oninput="depPhoneInput(this)" style="flex:1;padding:7px;border:1px solid #ccc;border-radius:3px;font-size:12px;background:white;color:#333;font-family:'Roboto Mono','Courier New',monospace;">
+            <input type="tel" id="dep-phone" maxlength="10" oninput="depPhoneInput(this)" style="flex:1;padding:7px;border:1px solid #ccc;border-radius:3px;font-size:12px;background:white;color:#333;font-family:'Roboto Mono','Courier New',monospace;">
           </div>
-          <div class="field-hint" style="font-size:10px;color:#888;margin-top:3px;">9 digits from 7 (MTN/Airtel)</div>
-          <div class="field-error" id="dep-phone-err">Enter 9 digits starting with 7</div>
+          <div class="field-hint" style="font-size:10px;color:#888;margin-top:3px;">10 digits starting with 0 (MTN/Airtel)</div>
+          <div class="field-error" id="dep-phone-err">Enter 10 digits starting with 0</div>
         </div>
         <div class="field-group">
           <label class="field-label" style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.3px;">Amount (UGX)</label>
@@ -1096,8 +1096,6 @@ input[type="password"]{padding-right:40px;}
     <div class="menu-divider"></div>
     <div class="menu-item" onclick="menuNav('history')"><span class="menu-item-icon"></span>My Activity</div>
     <div class="menu-item" onclick="menuNav('profile')"><span class="menu-item-icon"></span>Preferences</div>
-    <div class="menu-divider"></div>
-    <div class="menu-item" onclick="openWaGroup()"><span class="menu-item-icon"></span>Help & Support</div>
   </div>
   <button class="menu-logout" onclick="doLogout()"><span style="font-size:18px"></span>Logout</button>
 </div>
@@ -1575,7 +1573,19 @@ function updateRegPrefix() {
 }
 
 function regPhoneInput(inp) { inp.value = inp.value.replace(/\D/g, '').slice(0, 10); }
-function depPhoneInput(inp) { inp.value = inp.value.replace(/\D/g, '').slice(0, 9); }
+function depPhoneInput(inp) { inp.value = inp.value.replace(/\D/g, '').slice(0, 10); }
+
+function initDepositPhoneExample() {
+  if (currentUser && currentUser.phone) {
+    // Convert full phone "+256712345678" to local format "0712345678"
+    const fullPhone = currentUser.phone;
+    let localPhone = fullPhone;
+    if (fullPhone.startsWith('+256')) {
+      localPhone = '0' + fullPhone.substring(4);
+    }
+    document.getElementById('dep-phone-example').textContent = localPhone;
+  }
+}
 
 function copyRef() {
   const url = document.getElementById('ref-url-new');
@@ -1662,6 +1672,7 @@ function switchTab(tab) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   const idx = navOrder.indexOf(tab);
   if (idx >= 0) document.querySelectorAll('.nav-item')[idx].classList.add('active');
+  if (tab === 'deposit') initDepositPhoneExample();
   closeMenu();
 }
 
@@ -2087,8 +2098,9 @@ async function cleanupOldNotifications() {
 // ============================================================
 async function doDeposit() {
   clearErrors('dep-phone-err', 'dep-amount-err');
-  const phoneDigits = document.getElementById('dep-phone').value.trim();
-  if (!phoneDigits || phoneDigits.length !== 9 || !phoneDigits.startsWith('7')) { setErr('dep-phone-err', true, 'Enter 9 digits starting with 7'); return; }
+  const phoneInput = document.getElementById('dep-phone').value.trim();
+  // Validate: must be 10 digits starting with 0
+  if (!phoneInput || phoneInput.length !== 10 || !phoneInput.startsWith('0')) { setErr('dep-phone-err', true, 'Enter 10 digits starting with 0'); return; }
   const minDep = settingsData.minDeposit || 10000;
   const maxDep = settingsData.maxDeposit || 5000000;
   const amount = parseInt(document.getElementById('dep-amount').value) || 0;
@@ -2105,6 +2117,8 @@ async function doDeposit() {
   
   const btn = document.getElementById('dep-submit-btn');
   btn.disabled = true; btn.textContent = '⏳ Processing...';
+  // Convert local format to international format: "0712345678" -> "712345678" -> "+256712345678"
+  const phoneDigits = phoneInput.substring(1); // Remove leading 0: "712345678"
   const fullPhone = '+256' + phoneDigits;
   const reference = genUUID();
   const uraTax = (settingsData.uraTax || 4) / 100;
