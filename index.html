@@ -26,7 +26,7 @@
   if (twitterImage) twitterImage.setAttribute('content', logoUrl);
 })();
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;700&family=Poppins:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f0faf7;
@@ -34,18 +34,18 @@
   --surface2:#dceee9;
   --surface3:#d0e7e0;
   --border:#c4dfd7;
-  --accent:#10b981;
-  --accent2:#059669;
-  --accent3:#34d399;
+  --accent:#ff8c42;
+  --accent2:#ffa84d;
+  --accent3:#ff7d1f;
   --warn:#ff6b6b;
-  --gold:#10b981;
-  --text:#333333;
-  --muted:#666666;
-  --success:#10b981;
-  --danger:#ef4444;
+  --gold:#ff8c42;
+  --text:#ff8c42;
+  --muted:#ffa84d;
+  --success:#ff8c42;
+  --danger:#ff6b6b;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Courier New',Courier,monospace;background:var(--bg);color:var(--text);min-height:100vh;max-width:500px;margin:0 auto;position:relative;overflow-x:hidden;}
+body{font-family:'Poppins','Roboto','Courier New',Courier,monospace;background:var(--bg);color:var(--text);min-height:100vh;max-width:500px;margin:0 auto;position:relative;overflow-x:hidden;}
 
 /* Avatar Styles */
 .avatar{
@@ -75,7 +75,7 @@ body{font-family:'Courier New',Courier,monospace;background:var(--bg);color:var(
 .auth-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:800;margin-bottom:2px;color:var(--accent);}
 .auth-subtitle{font-size:11px;color:#bbb;margin-bottom:14px;}
 .field-group{margin-bottom:10px;}
-.field-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin-bottom:4px;display:block;}
+.field-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text);margin-bottom:4px;display:block;font-family:'Roboto',sans-serif;}
 .field-wrap{position:relative;display:flex;align-items:center;}
 .field-icon{position:absolute;left:12px;font-size:14px;pointer-events:none;z-index:2;}
 input,select{width:100%;background:#3a3a3a;border:1px solid #555;border-radius:10px;padding:10px 12px 10px 36px;font-family:'Courier New',Courier,monospace;font-size:13px;color:#fff;outline:none;}
@@ -84,7 +84,7 @@ select{cursor:pointer;}select option{background:#3a3a3a;color:#fff;}
 .eye-btn{position:absolute;right:12px;background:none;border:none;font-size:11px;cursor:pointer;padding:3px 6px;color:var(--accent);font-weight:600;text-decoration:underline;}
 .eye-btn:hover{color:var(--accent2);}
 input[type="password"]{padding-right:40px;}
-.field-hint{font-size:9px;color:#777;margin-top:3px;padding-left:2px;}
+.field-hint{font-size:9px;color:var(--muted);margin-top:3px;padding-left:2px;font-family:'Roboto',sans-serif;}
 .field-error{font-size:9px;color:var(--warn);margin-top:3px;padding-left:2px;display:none;}
 .field-error.show{display:block;}
 .pw-strength{display:flex;gap:3px;margin-top:5px;}
@@ -123,7 +123,7 @@ input[type="password"]{padding-right:40px;}
 .side-menu-brand{font-family:'Playfair Display',serif;font-size:18px;font-weight:800;color:var(--accent);}
 .close-menu{width:32px;height:32px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);font-size:18px;cursor:pointer;display:grid;place-items:center;}
 .side-menu-items{flex:1;padding:16px;}
-.menu-item{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:12px;cursor:pointer;margin-bottom:4px;font-size:14px;font-weight:600;color:var(--text);}
+.menu-item{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:12px;cursor:pointer;margin-bottom:4px;font-size:14px;font-weight:600;color:var(--text);font-family:'Roboto',sans-serif;}
 .menu-item:hover{background:var(--surface2);}
 .menu-item.active-menu{background:var(--surface3);color:var(--accent);}
 .menu-item-icon{font-size:20px;width:28px;}
@@ -153,34 +153,34 @@ input[type="password"]{padding-right:40px;}
 #sec-team .ref-link-hint-new{color:rgba(255,255,255,0.9);}
 /* Deposit Page - Green */
 #sec-deposit{background:#10b981;padding:16px;border-radius:12px;margin:0 16px 14px;}
-#sec-deposit .inner-header{color:#fff;}
-#sec-deposit .inner-title{color:#fff;}
-#sec-deposit .inner-sub{color:rgba(255,255,255,0.9);}
-#sec-deposit .field-label{color:#fff !important;}
-#sec-deposit .field-group{color:#fff;}
-#sec-deposit input{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3) !important;color:#fff;}
+#sec-deposit .inner-header{color:#ff8c42;}
+#sec-deposit .inner-title{color:#ff8c42;font-family:'Poppins',sans-serif;font-weight:700;font-size:20px;}
+#sec-deposit .inner-sub{color:#ffa84d;font-family:'Roboto',sans-serif;font-weight:500;}
+#sec-deposit .field-label{color:#ffa84d !important;font-family:'Roboto',sans-serif;font-weight:500;}
+#sec-deposit .field-group{color:#ffa84d;}
+#sec-deposit input{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3) !important;color:#fff;font-family:'JetBrains Mono',monospace;}
 #sec-deposit input::placeholder{color:rgba(255,255,255,0.7);}
 #sec-deposit input:focus{border-color:rgba(255,255,255,0.5) !important;}
-#sec-deposit .field-hint{color:rgba(255,255,255,0.8) !important;}
+#sec-deposit .field-hint{color:#ffa84d !important;font-family:'Roboto',sans-serif;font-weight:500;}
 #sec-deposit .field-error{color:#fff !important;}
-#sec-deposit .deposit-note{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:#fff;}
-#sec-deposit button{background:rgba(0,0,0,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3);}
+#sec-deposit .deposit-note{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:#fff;font-family:'JetBrains Mono',monospace;font-weight:700;}
+#sec-deposit button{background:rgba(0,0,0,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3);font-family:'Roboto',sans-serif;font-weight:700;}
 #sec-deposit .green-btn{background:rgba(0,0,0,0.4);color:#fff;}
 /* Withdraw Page - Red */
 #sec-withdraw{background:#ff6b6b;padding:16px;border-radius:12px;margin:0 16px 14px;}
-#sec-withdraw .inner-header{color:#fff;}
-#sec-withdraw .inner-title{color:#fff;}
-#sec-withdraw .inner-sub{color:rgba(255,255,255,0.9);}
-#sec-withdraw .field-label{color:#fff !important;}
-#sec-withdraw .field-group{color:#fff;}
-#sec-withdraw input{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3) !important;color:#fff;}
+#sec-withdraw .inner-header{color:#ff8c42;}
+#sec-withdraw .inner-title{color:#ff8c42;font-family:'Poppins',sans-serif;font-weight:700;font-size:20px;}
+#sec-withdraw .inner-sub{color:#ffa84d;font-family:'Roboto',sans-serif;font-weight:500;}
+#sec-withdraw .field-label{color:#ffa84d !important;font-family:'Roboto',sans-serif;font-weight:500;}
+#sec-withdraw .field-group{color:#ffa84d;}
+#sec-withdraw input{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3) !important;color:#fff;font-family:'JetBrains Mono',monospace;}
 #sec-withdraw input::placeholder{color:rgba(255,255,255,0.7);}
 #sec-withdraw input:focus{border-color:rgba(255,255,255,0.5) !important;}
-#sec-withdraw .field-hint{color:rgba(255,255,255,0.8) !important;}
+#sec-withdraw .field-hint{color:#ffa84d !important;font-family:'Roboto',sans-serif;font-weight:500;}
 #sec-withdraw .field-error{color:#fff !important;}
-#sec-withdraw .charge-note{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:#fff;}
-#sec-withdraw button{background:rgba(0,0,0,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3);}
-#sec-withdraw .with-section{color:#fff;}
+#sec-withdraw .charge-note{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:#fff;font-family:'JetBrains Mono',monospace;font-weight:700;}
+#sec-withdraw button{background:rgba(0,0,0,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3);font-family:'Roboto',sans-serif;font-weight:700;}
+#sec-withdraw .with-section{color:#ffa84d;}
 .stats-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:22px 20px;}
 .balance-big{text-align:center;padding:8px 0 16px;}
 .balance-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:8px;}
