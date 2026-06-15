@@ -1009,10 +1009,6 @@ input[type="password"]{padding-right:40px;}
           <div class="profile-value-stacked" id="profile-referrals-simple">—</div>
         </div>
         <div class="profile-item-stacked">
-          <div class="profile-label-stacked">Verification Status</div>
-          <div class="profile-value-stacked" id="profile-verification-simple">—</div>
-        </div>
-        <div class="profile-item-stacked">
           <div class="profile-label-stacked">Last Login</div>
           <div class="profile-value-stacked" id="profile-lastlogin-simple">—</div>
         </div>
@@ -1866,7 +1862,6 @@ function updateProfileUI() {
   document.getElementById('profile-user-simple').textContent = currentUser.username || '—';
   document.getElementById('profile-country-simple').textContent = currentUser.country || '—';
   document.getElementById('profile-referrals-simple').textContent = (currentUser.referralCount || 0);
-  document.getElementById('profile-verification-simple').textContent = currentUser.activated ? '✅ Verified' : '⏳ Pending';
   document.getElementById('profile-lastlogin-simple').textContent = currentUser.lastLogin || 'Now';
   
   // Format registration date as day month year
