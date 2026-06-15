@@ -933,7 +933,7 @@ input[type="password"]{padding-right:40px;}
 
   <!-- Profile -->
   <div class="dash-section" id="sec-profile">
-    <div class="inner-header"><span style="font-size:22px"></span><div><div class="inner-title">INFOR</div><div class="inner-sub">Your account details</div></div></div>
+    <div class="inner-header"><span style="font-size:22px"></span><div><div class="inner-title">PROFILE</div><div class="inner-sub">Your account information</div></div></div>
     <div class="section">
       <div class="profile-card-stacked">
         <div class="profile-item-stacked">
@@ -941,18 +941,36 @@ input[type="password"]{padding-right:40px;}
           <div class="profile-value-stacked" id="profile-user-simple">—</div>
         </div>
         <div class="profile-item-stacked">
-          <div class="profile-label-stacked">Phone Number</div>
-          <div class="profile-value-stacked" id="profile-phone-simple">—</div>
+          <div class="profile-label-stacked">Country</div>
+          <div class="profile-value-stacked" id="profile-country-simple">—</div>
         </div>
         <div class="profile-item-stacked">
-          <div class="profile-label-stacked">Registered Date</div>
-          <div class="profile-value-stacked" id="profile-date-simple">—</div>
+          <div class="profile-label-stacked">Total Referrals</div>
+          <div class="profile-value-stacked" id="profile-referrals-simple">—</div>
         </div>
         <div class="profile-item-stacked">
-          <div class="profile-label-stacked">Status</div>
-          <div class="profile-value-stacked" id="profile-status-simple">—</div>
+          <div class="profile-label-stacked">Verification Status</div>
+          <div class="profile-value-stacked" id="profile-verification-simple">—</div>
+        </div>
+        <div class="profile-item-stacked">
+          <div class="profile-label-stacked">Last Login</div>
+          <div class="profile-value-stacked" id="profile-lastlogin-simple">—</div>
+        </div>
+        <div class="profile-item-stacked">
+          <div class="profile-label-stacked">Registration Date</div>
+          <div class="profile-value-stacked" id="profile-registration-date">—</div>
         </div>
       </div>
+
+      <!-- Referral Link Section -->
+      <div style="background:#f0faf7;border:1px solid #dceee9;border-radius:0;padding:12px;margin-top:12px;">
+        <div style="font-size:9px;color:#10b981;margin-bottom:6px;text-transform:uppercase;font-weight:700;">Your Referral Link</div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <input type="text" id="profile-referral-link" readonly style="flex:1;background:#ffffff;border:1px solid #dceee9;padding:8px;font-size:10px;font-family:'Courier New',Courier,monospace;color:#333;border-radius:0;" value="">
+          <button style="background:#10b981;border:none;padding:8px 12px;font-size:10px;font-weight:700;color:white;cursor:pointer;border-radius:0;" onclick="copyProfileReferralLink()">Copy</button>
+        </div>
+      </div>
+
       <button class="logout-btn-stacked" onclick="doLogout()">Sign Out</button>
     </div>
   </div>
@@ -1330,6 +1348,15 @@ function updateTime() {
 
 function copyReferralLink() {
   const linkInput = document.getElementById('referral-link-display');
+  if (linkInput && linkInput.value) {
+    linkInput.select();
+    document.execCommand('copy');
+    alert('Referral link copied to clipboard!');
+  }
+}
+
+function copyProfileReferralLink() {
+  const linkInput = document.getElementById('profile-referral-link');
   if (linkInput && linkInput.value) {
     linkInput.select();
     document.execCommand('copy');
@@ -1743,9 +1770,35 @@ function updateReferralLink() {
 function updateProfileUI() {
   if (!currentUser) return;
   document.getElementById('profile-user-simple').textContent = currentUser.username || '—';
-  document.getElementById('profile-phone-simple').textContent = currentUser.phone || '—';
-  document.getElementById('profile-date-simple').textContent = currentUser.joinedDate || '2025';
-  document.getElementById('profile-status-simple').textContent = currentUser.activated ? '🟢 Active' : '⏳ Inactive';
+  document.getElementById('profile-country-simple').textContent = currentUser.country || '—';
+  document.getElementById('profile-referrals-simple').textContent = (currentUser.referralCount || 0);
+  document.getElementById('profile-verification-simple').textContent = currentUser.activated ? '✅ Verified' : '⏳ Pending';
+  document.getElementById('profile-lastlogin-simple').textContent = currentUser.lastLogin || 'Now';
+  
+  // Format registration date as day month year
+  if (currentUser.joinedDate) {
+    const dateStr = currentUser.joinedDate;
+    try {
+      const date = new Date(dateStr);
+      const day = date.getDate();
+      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const month = months[date.getMonth()];
+      const year = date.getFullYear();
+      document.getElementById('profile-registration-date').textContent = `${day} ${month} ${year}`;
+    } catch (e) {
+      document.getElementById('profile-registration-date').textContent = dateStr || '—';
+    }
+  } else {
+    document.getElementById('profile-registration-date').textContent = '—';
+  }
+  
+  // Set referral link in profile
+  if (currentUser.username) {
+    const siteBase = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
+    const refLink = siteBase + '?ref=' + encodeURIComponent(currentUser.username);
+    document.getElementById('profile-referral-link').value = refLink;
+  }
+  
   document.getElementById('with-phone-display').textContent = currentUser.phone || '—';
 }
 
