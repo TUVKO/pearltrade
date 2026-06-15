@@ -578,7 +578,10 @@ input[type="password"]{padding-right:40px;}
   <div class="dash-section active" id="sec-home">
     <!-- Greeting Message -->
     <div class="section">
-      <div style="background:#ec4899;border:none;border-radius:0;padding:16px;font-size:18px;font-weight:700;color:white;margin-bottom:16px;text-align:left;" id="greeting-full">Welcome back, Lowan</div>
+      <div style="background:#ec4899;border:none;border-radius:0;padding:16px;font-size:18px;font-weight:700;color:white;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">
+        <div id="greeting-full">Welcome back, Trader</div>
+        <div id="greeting-time" style="font-size:16px;font-weight:600;">13:59</div>
+      </div>
     </div>
 
     <!-- Referral Box at Top -->
@@ -1265,12 +1268,25 @@ async function calculateAndPayDailyProfits() {
 // Loading screen hides immediately after login check
 // ============================================================
 function updateGreeting() {
-  const username = currentUsername || 'User';
   const greetingEl = document.getElementById('greeting-full');
   if (greetingEl) {
-    greetingEl.textContent = 'Welcome back, ' + username;
+    greetingEl.textContent = 'Welcome back, Trader';
+  }
+  updateTime();
+}
+
+function updateTime() {
+  const timeEl = document.getElementById('greeting-time');
+  if (timeEl) {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    timeEl.textContent = hours + ':' + minutes;
   }
 }
+
+// Update time every minute
+setInterval(updateTime, 60000);
 
 async function initApp() {
   startSettingsListener();
