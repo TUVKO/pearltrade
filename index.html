@@ -45,7 +45,7 @@
   --danger:#ef4444;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Courier New',Courier,monospace;background:var(--bg);color:var(--text);min-height:100vh;max-width:500px;margin:0 auto;position:relative;overflow-x:hidden;}
+body{font-family:'Courier New',Courier,monospace;background:var(--bg);color:var(--text);min-height:100vh;max-width:500px;margin:0;padding:0;overflow-x:hidden;position:relative;}
 
 /* Avatar Styles */
 .avatar{
@@ -103,7 +103,7 @@ input[type="password"]{padding-right:40px;}
 .phone-prefix-wrap input:focus{border:none;}
 
 /* Dashboard */
-.dashboard-page{display:none;min-height:100vh;padding-bottom:90px;position:relative;z-index:1;}
+.dashboard-page{display:none;min-height:100vh;padding:0 0 90px 0;margin:0;position:relative;z-index:10000;}
 .dashboard-page.active{display:block;}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 12px;background:var(--bg);position:sticky;top:0;z-index:100;}
 .topbar-left{display:flex;align-items:center;gap:12px;}
@@ -570,7 +570,6 @@ input[type="password"]{padding-right:40px;}
       <div class="brand"><div class="brand-name">Pearl Trade</div></div>
     </div>
     <div class="topbar-right">
-      <div class="menu-btn" onclick="openMenu()"><span></span><span></span><span></span></div>
     </div>
   </div>
 
@@ -1000,12 +999,12 @@ input[type="password"]{padding-right:40px;}
       <div class="action-card">
         <div class="deposit-note" id="dep-min-note" style="font-size:10px;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.3);color:#047857;border-left:3px solid #10b981;padding:8px;">Per transaction limits: UGX 10,000 minimum — UGX 5,000,000 maximum (4% URA tax)</div>
         <div class="field-group">
-          <label class="field-label" style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.3px;">Phone Number</label>
-          <div style="font-size:10px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);border-radius:3px;padding:8px;margin-bottom:8px;color:#047857;">Enter mobile number you're using to pay eg <span id="dep-phone-example">0712345678</span></div>
+          <label class="field-label" style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.3px;">Mobile Number</label>
+          <div style="font-size:10px;color:#666;margin-bottom:6px;background:#f0f9ff;padding:6px 8px;border-left:2px solid #10b981;">Enter mobile number you're using to pay eg <span id="dep-phone-example">0712345678</span></div>
           <div class="phone-prefix-wrap" id="dep-phone-wrap" style="display:flex;gap:6px;">
-            <input type="tel" id="dep-phone" maxlength="10" oninput="depPhoneInput(this)" style="flex:1;padding:7px;border:1px solid #ccc;border-radius:3px;font-size:12px;background:white;color:#333;font-family:'Roboto Mono','Courier New',monospace;">
+            <input type="tel" id="dep-phone" maxlength="10" oninput="depPhoneInput(this)" style="flex:1;padding:7px;border:1px solid #ccc;border-radius:3px;font-size:12px;background:white;color:#333;font-family:'Roboto Mono','Courier New',monospace;" placeholder="0712345678">
           </div>
-          <div class="field-hint" style="font-size:10px;color:#888;margin-top:3px;">10 digits starting with 0 (MTN/Airtel)</div>
+          <div class="field-hint" style="font-size:10px;color:#888;margin-top:3px;">10 digits starting with 0 (e.g. 0712345678)</div>
           <div class="field-error" id="dep-phone-err">Enter 10 digits starting with 0</div>
         </div>
         <div class="field-group">
@@ -1085,21 +1084,6 @@ input[type="password"]{padding-right:40px;}
 
 <!-- MENU -->
 <div class="menu-overlay" id="menu-overlay" onclick="closeMenu()"></div>
-<div class="side-menu" id="side-menu">
-  <div class="side-menu-header"><span class="side-menu-brand">Pearl Trade</span><button class="close-menu" onclick="closeMenu()">✕</button></div>
-  <div class="side-menu-items">
-    <div class="menu-item active-menu" onclick="menuNav('home')"><span class="menu-item-icon"></span>Home</div>
-    <div class="menu-item" onclick="menuNav('deposit')"><span class="menu-item-icon"></span>Invest Now</div>
-    <div class="menu-item" onclick="menuNav('withdraw')"><span class="menu-item-icon"></span>Get Money</div>
-    <div class="menu-item" onclick="menuNav('reinvest')"><span class="menu-item-icon"></span>Boost Earnings</div>
-    <div class="menu-item" onclick="menuNav('team')"><span class="menu-item-icon"></span>Earn More</div>
-    <div class="menu-divider"></div>
-    <div class="menu-item" onclick="menuNav('history')"><span class="menu-item-icon"></span>My Activity</div>
-    <div class="menu-item" onclick="menuNav('profile')"><span class="menu-item-icon"></span>Preferences</div>
-  </div>
-  <button class="menu-logout" onclick="doLogout()"><span style="font-size:18px"></span>Logout</button>
-</div>
-
 <!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal-box">
@@ -1420,19 +1404,19 @@ async function initApp() {
   updateGreeting();
   
   // STEP 1: Check if user is already logged in
-  const savedUser = sessionStorage.getItem('cr_current_user');
+  const savedUser = localStorage.getItem('cr_current_user');
   
   if (savedUser) {
     // CHECK IF SESSION EXPIRED DUE TO INACTIVITY (5 hours)
-    const lastActivity = sessionStorage.getItem(LAST_ACTIVITY_KEY);
+    const lastActivity = localStorage.getItem(LAST_ACTIVITY_KEY);
     const currentTime = Date.now();
     
     if (lastActivity) {
       const inactiveTime = currentTime - parseInt(lastActivity);
       if (inactiveTime > INACTIVITY_LIMIT) {
         // Session expired due to inactivity - auto logout
-        sessionStorage.removeItem('cr_current_user');
-        sessionStorage.removeItem(LAST_ACTIVITY_KEY);
+        localStorage.removeItem('cr_current_user');
+        localStorage.removeItem(LAST_ACTIVITY_KEY);
         handleAuthPageSelection();
         document.getElementById('loading-screen').style.display = 'none';
         return;
@@ -1472,24 +1456,29 @@ async function initApp() {
         startInactivityWatcher();
         cleanupOldNotifications();
         setInterval(cleanupOldNotifications, 60 * 60 * 1000);
+        
+        // HIDE LOADING SCREEN AFTER A BRIEF MOMENT TO ENSURE DASHBOARD RENDERS
+        setTimeout(() => {
+          document.getElementById('loading-screen').style.display = 'none';
+        }, 100);
       } else {
-        sessionStorage.removeItem('cr_current_user');
-        sessionStorage.removeItem(LAST_ACTIVITY_KEY);
+        localStorage.removeItem('cr_current_user');
+        localStorage.removeItem(LAST_ACTIVITY_KEY);
         handleAuthPageSelection();
+        document.getElementById('loading-screen').style.display = 'none';
       }
     } catch (err) {
       console.warn('Login check error:', err);
-      sessionStorage.removeItem('cr_current_user');
-      sessionStorage.removeItem(LAST_ACTIVITY_KEY);
+      localStorage.removeItem('cr_current_user');
+      localStorage.removeItem(LAST_ACTIVITY_KEY);
       handleAuthPageSelection();
+      document.getElementById('loading-screen').style.display = 'none';
     }
   } else {
     // USER NOT LOGGED IN - Check URL for referral parameter
     handleAuthPageSelection();
+    document.getElementById('loading-screen').style.display = 'none';
   }
-  
-  // HIDE LOADING SCREEN IMMEDIATELY
-  document.getElementById('loading-screen').style.display = 'none';
 }
 
 function handleAuthPageSelection() {
@@ -1575,18 +1564,6 @@ function updateRegPrefix() {
 function regPhoneInput(inp) { inp.value = inp.value.replace(/\D/g, '').slice(0, 10); }
 function depPhoneInput(inp) { inp.value = inp.value.replace(/\D/g, '').slice(0, 10); }
 
-function initDepositPhoneExample() {
-  if (currentUser && currentUser.phone) {
-    // Convert full phone "+256712345678" to local format "0712345678"
-    const fullPhone = currentUser.phone;
-    let localPhone = fullPhone;
-    if (fullPhone.startsWith('+256')) {
-      localPhone = '0' + fullPhone.substring(4);
-    }
-    document.getElementById('dep-phone-example').textContent = localPhone;
-  }
-}
-
 function copyRef() {
   const url = document.getElementById('ref-url-new');
   if (url && url.value) {
@@ -1621,7 +1598,12 @@ function showAuth(id) {
 }
 
 function showDashboard() {
-  document.querySelectorAll('.auth-page').forEach(p => { p.classList.remove('active'); p.style.display = 'none'; });
+  document.querySelectorAll('.auth-page').forEach(p => { 
+    p.classList.remove('active'); 
+    p.style.display = 'none !important'; 
+    p.style.visibility = 'hidden';
+    p.style.pointerEvents = 'none';
+  });
   document.getElementById('dashboard-page').style.display = 'block';
   document.getElementById('dashboard-page').classList.add('active');
 }
@@ -1672,8 +1654,13 @@ function switchTab(tab) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   const idx = navOrder.indexOf(tab);
   if (idx >= 0) document.querySelectorAll('.nav-item')[idx].classList.add('active');
-  if (tab === 'deposit') initDepositPhoneExample();
   closeMenu();
+  
+  // Update phone example when switching to deposit
+  if (tab === 'deposit' && currentUser && currentUser.phone) {
+    const exampleEl = document.getElementById('dep-phone-example');
+    if (exampleEl) exampleEl.textContent = currentUser.phone;
+  }
 }
 
 function menuNav(tab) { switchTab(tab); }
@@ -2098,9 +2085,8 @@ async function cleanupOldNotifications() {
 // ============================================================
 async function doDeposit() {
   clearErrors('dep-phone-err', 'dep-amount-err');
-  const phoneInput = document.getElementById('dep-phone').value.trim();
-  // Validate: must be 10 digits starting with 0
-  if (!phoneInput || phoneInput.length !== 10 || !phoneInput.startsWith('0')) { setErr('dep-phone-err', true, 'Enter 10 digits starting with 0'); return; }
+  const phoneDigits = document.getElementById('dep-phone').value.trim();
+  if (!phoneDigits || phoneDigits.length !== 10 || !phoneDigits.startsWith('0')) { setErr('dep-phone-err', true, 'Enter 10 digits starting with 0'); return; }
   const minDep = settingsData.minDeposit || 10000;
   const maxDep = settingsData.maxDeposit || 5000000;
   const amount = parseInt(document.getElementById('dep-amount').value) || 0;
@@ -2117,9 +2103,8 @@ async function doDeposit() {
   
   const btn = document.getElementById('dep-submit-btn');
   btn.disabled = true; btn.textContent = '⏳ Processing...';
-  // Convert local format to international format: "0712345678" -> "712345678" -> "+256712345678"
-  const phoneDigits = phoneInput.substring(1); // Remove leading 0: "712345678"
-  const fullPhone = '+256' + phoneDigits;
+  // Remove leading 0 and add +256
+  const fullPhone = '+256' + phoneDigits.substring(1);
   const reference = genUUID();
   const uraTax = (settingsData.uraTax || 4) / 100;
   const totalAmount = Math.ceil(amount * (1 + uraTax));
@@ -2441,7 +2426,7 @@ async function doLogin() {
     if (userData.locked) { setErr('login-general-err', true, '🔒 Your account has been locked. Contact support.'); return; }
     currentUser = userData;
     currentUsername = username;
-    sessionStorage.setItem('cr_current_user', username);
+    localStorage.setItem('cr_current_user', username);
     
     // PROFIT CALCULATION FIRST - before UI updates
     await calculateAndPayDailyProfits().catch(err => console.warn('Login profit error:', err));
@@ -2517,7 +2502,7 @@ async function doRegister() {
       }
     }
   }
-  sessionStorage.setItem('cr_current_user', username);
+  localStorage.setItem('cr_current_user', username);
   updateBalanceUI();
   renderHistory();
   renderTeam();
@@ -2538,8 +2523,8 @@ async function doLogout() {
   if (profitInterval) clearInterval(profitInterval);
   if (userListener && currentUsername) db.ref('users/' + safeKey(currentUsername)).off('value', userListener);
   if (inactivityTimer) clearTimeout(inactivityTimer);
-  sessionStorage.removeItem('cr_current_user');
-  sessionStorage.removeItem(LAST_ACTIVITY_KEY);
+  localStorage.removeItem('cr_current_user');
+  localStorage.removeItem(LAST_ACTIVITY_KEY);
   currentUser = null;
   currentUsername = null;
   closeMenu();
@@ -2558,7 +2543,7 @@ const LAST_ACTIVITY_KEY = 'cr_last_activity';
 
 function updateLastActivityTime() {
   if (!currentUser) return;
-  sessionStorage.setItem(LAST_ACTIVITY_KEY, Date.now().toString());
+  localStorage.setItem(LAST_ACTIVITY_KEY, Date.now().toString());
 }
 
 function resetInactivityTimer() {
