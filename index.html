@@ -653,8 +653,20 @@ input[type="password"]{padding-right:40px;}
         <button style="background:#2d2d2d;border:none;color:white;padding:12px 8px;font-weight:600;font-size:12px;cursor:pointer;" onclick="doLogout()">Logout</button>
       </div>
 
-      <!-- Table Button -->
-      <button style="width:100%;background:#10b981;border:none;color:white;padding:12px 8px;font-weight:600;font-size:12px;cursor:pointer;margin-top:8px;" onclick="switchTab('plan')">Table</button>
+      <!-- Additional Action Buttons Grid -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-top:8px;">
+        <!-- Table Button -->
+        <button style="background:#10b981;border:none;color:white;padding:12px 8px;font-weight:600;font-size:12px;cursor:pointer;" onclick="switchTab('plan')">Table</button>
+
+        <!-- Support Button -->
+        <button style="background:#8b5cf6;border:none;color:white;padding:12px 8px;font-weight:600;font-size:12px;cursor:pointer;" onclick="openSupport()">Support</button>
+
+        <!-- Placeholder for future button -->
+        <div></div>
+
+        <!-- Placeholder for future button -->
+        <div></div>
+      </div>
     </div>
 
     <!-- Active Investment Display -->
@@ -1376,6 +1388,22 @@ async function openForgotPasswordWhatsApp() {
       return;
     }
     const message = encodeURIComponent('Hi, I forgot my password. Please help me reset it.');
+    const url = supportLink.includes('wa.me') ? `${supportLink}?text=${message}` : supportLink;
+    window.open(url, '_blank');
+  } catch (error) {
+    alert('Error opening WhatsApp. Please try again.');
+  }
+}
+
+async function openSupport() {
+  try {
+    const snap = await db.ref('settings/waSupport').get();
+    const supportLink = snap.val();
+    if (!supportLink) {
+      alert('Support WhatsApp link not configured. Please contact admin.');
+      return;
+    }
+    const message = encodeURIComponent('Hi, I need support with my Pearl Trade account. Please assist me.');
     const url = supportLink.includes('wa.me') ? `${supportLink}?text=${message}` : supportLink;
     window.open(url, '_blank');
   } catch (error) {
