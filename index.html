@@ -272,7 +272,7 @@ input[type="password"]{padding-right:40px;}
 .logout-btn-stacked:active{opacity:0.85;}
 
 /* Bottom Nav */
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:500px;background:var(--surface);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(6,1fr);padding:10px 4px 14px;z-index:200;gap:4px;}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:500px;background:var(--surface);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(5,1fr);padding:10px 4px 14px;z-index:200;gap:4px;}
 .nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:8px;background:#1a1a1a;border:1px solid #333;border-radius:0;}
 .nav-icon{font-size:18px;}
 .nav-label{font-size:12px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;color:var(--muted);}
@@ -649,8 +649,8 @@ input[type="password"]{padding-right:40px;}
         <!-- Re-Invest Button -->
         <button style="background:#ec4899;border:none;color:white;padding:12px 8px;font-weight:600;font-size:12px;font-style:italic;text-shadow:2px 2px 4px rgba(0,0,0,0.5);cursor:pointer;" onclick="switchTab('reinvest')">Re-Invest</button>
 
-        <!-- Team Button -->
-        <button style="background:#eab308;border:none;color:#333;padding:12px 8px;font-weight:600;font-size:12px;cursor:pointer;" onclick="switchTab('team')">Team</button>
+        <!-- Logout Button -->
+        <button style="background:#2d2d2d;border:none;color:white;padding:12px 8px;font-weight:600;font-size:12px;cursor:pointer;" onclick="doLogout()">Logout</button>
       </div>
     </div>
 
@@ -1001,7 +1001,6 @@ input[type="password"]{padding-right:40px;}
     <div class="nav-item" onclick="switchTab('history')"><span class="nav-label">Track</span></div>
     <div class="nav-item" onclick="switchTab('plan')"><span class="nav-label">Growth</span></div>
     <div class="nav-item" onclick="switchTab('profile')"><span class="nav-label">Account</span></div>
-    <div class="nav-item" onclick="doLogout()"><span class="nav-label">Logout</span></div>
   </nav>
 
 
