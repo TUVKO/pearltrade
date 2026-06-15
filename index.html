@@ -65,26 +65,26 @@ body{font-family:'Courier New',Courier,monospace;background:var(--bg);color:var(
 .avatar-md{width:40px;height:40px;font-size:16px;}
 
 /* Auth Pages */
-.auth-page{display:none;flex-direction:column;min-height:100vh;padding:16px 16px;}
+.auth-page{display:none;flex-direction:column;min-height:100vh;padding:16px 16px;background:#1a1a1a;justify-content:center;align-items:center;}
 .auth-page.active{display:flex;}
 .auth-hero{text-align:center;margin-bottom:12px;}
 .auth-logo{width:56px;height:56px;background:var(--accent);border-radius:16px;display:grid;place-items:center;font-size:28px;margin:0 auto 8px;color:#fff;}
 .auth-brand{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--accent);margin-bottom:2px;}
-.auth-tagline{font-size:10px;color:var(--muted);letter-spacing:0.8px;text-transform:uppercase;}
-.auth-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:18px 16px;}
+.auth-tagline{font-size:10px;color:#888;letter-spacing:0.8px;text-transform:uppercase;}
+.auth-card{background:#262626;border:2px solid #10b981;border-radius:0;padding:20px 18px;max-width:400px;width:100%;}
 .auth-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:800;margin-bottom:2px;color:var(--accent);}
-.auth-subtitle{font-size:11px;color:var(--muted);margin-bottom:14px;}
+.auth-subtitle{font-size:11px;color:#bbb;margin-bottom:14px;}
 .field-group{margin-bottom:10px;}
-.field-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;display:block;}
+.field-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin-bottom:4px;display:block;}
 .field-wrap{position:relative;display:flex;align-items:center;}
 .field-icon{position:absolute;left:12px;font-size:14px;pointer-events:none;z-index:2;}
-input,select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 12px 10px 36px;font-family:'Courier New',Courier,monospace;font-size:13px;color:var(--text);outline:none;}
+input,select{width:100%;background:#3a3a3a;border:1px solid #555;border-radius:10px;padding:10px 12px 10px 36px;font-family:'Courier New',Courier,monospace;font-size:13px;color:#fff;outline:none;}
 input:focus,select:focus{border-color:var(--accent);}
-select{cursor:pointer;}select option{background:var(--surface2);}
+select{cursor:pointer;}select option{background:#3a3a3a;color:#fff;}
 .eye-btn{position:absolute;right:12px;background:none;border:none;font-size:11px;cursor:pointer;padding:3px 6px;color:var(--accent);font-weight:600;text-decoration:underline;}
 .eye-btn:hover{color:var(--accent2);}
 input[type="password"]{padding-right:40px;}
-.field-hint{font-size:9px;color:var(--muted);margin-top:3px;padding-left:2px;}
+.field-hint{font-size:9px;color:#777;margin-top:3px;padding-left:2px;}
 .field-error{font-size:9px;color:var(--warn);margin-top:3px;padding-left:2px;display:none;}
 .field-error.show{display:block;}
 .pw-strength{display:flex;gap:3px;margin-top:5px;}
@@ -92,7 +92,7 @@ input[type="password"]{padding-right:40px;}
 .pw-bar.weak{background:var(--warn)}.pw-bar.medium{background:var(--gold)}.pw-bar.strong{background:var(--accent3)}
 .submit-btn{width:100%;background:var(--accent);border:none;border-radius:12px;padding:12px;font-family:'Courier New',Courier,monospace;font-size:14px;font-weight:700;color:#fff;cursor:pointer;margin-top:4px;}
 .submit-btn:active{transform:scale(.98);}
-.auth-switch{text-align:center;margin-top:12px;font-size:12px;color:var(--muted);}
+.auth-switch{text-align:center;margin-top:12px;font-size:12px;color:#999;}
 .auth-switch a{color:var(--accent);font-weight:700;cursor:pointer;text-decoration:none;}
 
 /* Phone Prefix */
