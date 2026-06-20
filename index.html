@@ -2081,11 +2081,13 @@ async function checkPendingDeposits(username) {
           const user = userSnap.val();
           const newStake = (user.stake || 0) + amount;
           const newBalance = (user.balance || 0) + amount;
+          const todayKey = getDateKey(new Date());
           
           await userRef.update({ 
             stake: newStake, 
             balance: newBalance,
-            activeInvestment: { amount: newStake, startDate: dateStr(), daysLeft: 56, dailyProfit: 0 }
+            activeInvestment: { amount: newStake, startDate: dateStr(), daysLeft: 56, dailyProfit: 0 },
+            lastProfitDate: todayKey
           });
           
           // Update UI silently if user is currently viewing
@@ -2448,7 +2450,7 @@ async function doReinvest() {
       newActiveInvestment.amount = newStake;
     }
     const updates = {
-      stake: newStake, balance: newBalance, activated: true, activeInvestment: newActiveInvestment,
+      stake: newStake, balance: newBalance, activated: true, activeInvestment: newActiveInvestment, lastProfitDate: todayKey,
       [`deposits/dep_reinvest_${Date.now()}`]: { amount, startDate: Date.now(), daysRun: 0, lastPaidDate: todayKey },
       [`transactions/tx_reinvest_a_${Date.now()}`]: { type: 'Re-Invest', amount: -amount, note: 'Moved from BALANCE to STAKE', date: now, status: 'completed' },
       [`transactions/tx_reinvest_b_${Date.now()}`]: { type: 'Profit', amount: profit, note: '10% instant profit on re-invest', date: now, status: 'completed' }
