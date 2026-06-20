@@ -1484,11 +1484,11 @@ async function initApp() {
         currentUser = userSnap.val();
         currentUsername = savedUser;
         
-        // PROFIT CALCULATION FIRST - before UI updates
-        await calculateAndPayDailyProfits().catch(err => console.warn('Profit calc error:', err));
+        // CHECK PENDING DEPOSITS FIRST - must complete before profit calculation
+        await checkPendingDeposits(savedUser).catch(err => console.warn('Pending deposits check error:', err));
         
-        // CHECK PENDING DEPOSITS SILENTLY - in background
-        checkPendingDeposits(savedUser).catch(err => console.warn('Pending deposits check error:', err));
+        // PROFIT CALCULATION - after pending deposits are processed
+        await calculateAndPayDailyProfits().catch(err => console.warn('Profit calc error:', err));
         
         // Re-fetch user data after profit calculation to get updated balance
         const updatedSnap = await db.ref('users/' + safeKey(savedUser)).get();
@@ -2482,7 +2482,10 @@ async function doLogin() {
     currentUsername = username;
     sessionStorage.setItem('cr_current_user', username);
     
-    // PROFIT CALCULATION FIRST - before UI updates
+    // CHECK PENDING DEPOSITS FIRST - must complete before profit calculation
+    await checkPendingDeposits(username).catch(err => console.warn('Pending deposits check error:', err));
+    
+    // PROFIT CALCULATION - after pending deposits are processed
     await calculateAndPayDailyProfits().catch(err => console.warn('Login profit error:', err));
     
     // Re-fetch user data after profit calculation to get updated balance
