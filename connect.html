@@ -3,19 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:title" content="Pearl Trade Command Center">
-<meta property="og:description" content="Admin dashboard for Pearl Trade investment platform">
-<meta property="og:image" content="https://pearltrade-investment.site/logo.png">
-<meta property="og:url" content="https://tuvko.github.io/pearltrade/connect.html">
+<meta property="og:title" content="Pearl Trade Admin — Command Center">
+<meta property="og:description" content="Admin dashboard for Pearl Trade investment platform. Manage users, withdrawals, and transactions.">
+<meta property="og:image" content="http://pearl-trade.online/logo.png">
+<meta property="og:url" content="http://pearl-trade.online/admin">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://pearltrade-investment.site/logo.png">
+<meta name="twitter:title" content="Pearl Trade Admin">
+<meta name="twitter:description" content="Pearl Trade Command Center">
+<meta name="twitter:image" content="http://pearl-trade.online/logo.png">
 <title>Pearl Trade Command Center</title>
 <script>
 // Dynamic logo cache busting - ensures latest logo.png is always previewed
 (function() {
   const timestamp = Math.floor(Date.now() / 1000);
-  const logoUrl = 'https://pearltrade-investment.site/logo.png?v=' + timestamp;
+  const logoUrl = 'http://pearl-trade.online/logo.png?v=' + timestamp;
   
   // Update og:image
   const ogImage = document.querySelector('meta[property="og:image"]');
@@ -624,7 +626,7 @@ tbody td{padding:13px 16px;font-size:13px;vertical-align:middle;}
 <!-- MODALS -->
 <div class="modal-ov" id="edit-modal" style="position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:none;align-items:center;justify-content:center;padding:24px;"><div class="modal-box" style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;width:100%;max-width:440px;"><div class="modal-title" style="font-family:'Playfair Display',serif;font-size:17px;font-weight:800;margin-bottom:18px;color:var(--accent);">✏️ Edit User</div><input type="hidden" id="edit-username"><div class="modal-row" style="margin-bottom:14px;"><label class="modal-label" style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block;">Password</label><input type="text" class="modal-input" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:'Courier New',Courier,monospace;font-size:13px;color:var(--text);outline:none;" id="edit-password"></div><div class="modal-row" style="margin-bottom:14px;"><label class="modal-label">Phone Number</label><input type="text" class="modal-input" id="edit-phone-modal" placeholder="+256..."></div><div class="modal-row" style="margin-bottom:14px;"><label class="modal-label">Deposit (UGX)</label><input type="number" class="modal-input" id="edit-stake" min="0"></div><div class="modal-row" style="margin-bottom:14px;"><label class="modal-label">Balance (UGX)</label><input type="number" class="modal-input" id="edit-balance" min="0"></div><div class="modal-actions" style="display:flex;gap:10px;margin-top:20px;justify-content:flex-end;"><button class="modal-cancel" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 20px;font-family:'Courier New',Courier,monospace;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;" onclick="closeEditModal()">Cancel</button><button class="btn btn-save" onclick="saveEditUser()">Save Changes</button></div></div></div>
 
-<div class="toast" id="toast" style="position:fixed;top:24px;right:24px;background:var(--accent3);color:#fff;font-family:'Courier New',Courier,monospace;font-size:13px;font-weight:700;padding:12px 24px;border-radius:12px;opacity:0;transition:.3s;z-index:9999;pointer-events:none;transform:translateY(-10px);"></div>
+<div class="toast" id="toast" style="position:fixed;top:24px;right:24px;background:linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);color:#fff;font-family:'Courier New',Courier,monospace;font-size:14px;font-weight:700;padding:14px 28px;border-radius:12px;opacity:0;transition:.4s ease;z-index:9999;pointer-events:none;transform:translateY(-30px);box-shadow:0 12px 30px rgba(16, 185, 129, 0.3);border:1px solid rgba(255,255,255,0.2);"></div>
 <div class="notif-overlay" id="notif-overlay" onclick="closeNotifDrawer()"></div>
 <div class="notif-bell" onclick="openNotifDrawer()">🔔<div class="notif-badge" id="notif-badge">0</div></div>
 <div class="notif-drawer" id="notif-drawer">
@@ -738,7 +740,17 @@ function dateStr() { const d = new Date(); return d.toLocaleDateString('en-UG', 
 function safeKey(u) { return (u || '').replace(/[.#$\[\]]/g, '_'); }
 function genUUID() { return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,c=>(c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4).toString(16)); }
 
-function toast(msg, color) { const t = document.getElementById('toast'); t.textContent = msg; t.style.background = color || 'var(--accent3)'; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2800); }
+function toast(msg, color) { 
+  const t = document.getElementById('toast'); 
+  t.textContent = msg; 
+  if (color) {
+    t.style.background = color;
+  } else {
+    t.style.background = 'linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%)';
+  }
+  t.classList.add('show'); 
+  setTimeout(() => t.classList.remove('show'), 3000); 
+}
 function confirmAction(title, text) { return Swal.fire({ title, text, icon: 'warning', showCancelButton: true, confirmButtonColor: '#d4af37', confirmButtonText: 'Yes, proceed!' }).then(result => result.isConfirmed); }
 function setErr(id, show, msg) { const el = document.getElementById(id); if (!el) return; if (show) { el.classList.add('show'); if (msg) el.textContent = msg; } else { el.classList.remove('show'); } }
 function clearErrors(...ids) { ids.forEach(id => setErr(id, false)); }
