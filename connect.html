@@ -900,6 +900,7 @@ async function saveEditUser() {
     updates.balance = newBalance + instantProfit;
     const todayKey = new Date().toISOString().slice(0, 10);
     const depKey = 'dep_' + Date.now();
+    updates.lastProfitDate = todayKey;
     updates['deposits/' + depKey] = {
       amount: addedAmount,
       startDate: Date.now(),
