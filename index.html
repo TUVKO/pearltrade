@@ -904,7 +904,7 @@ input[type="password"]{padding-right:40px;}
           <div class="ref-card-title-new" style="color:#ffa84d;font-size:14px;font-weight:800;margin-bottom:12px;">SHARE YOUR CODE</div>
           <div class="ref-link-box-new" style="display:flex;gap:8px;align-items:center;">
             <input type="text" class="ref-link-input-new" id="ref-url-new" readonly style="flex:1;background:#ffffff;padding:12px;border:1px solid #ddd;border-radius:8px;font-family:'Courier New',monospace;font-size:11px;color:#333;">
-            <button id="ref-copy-btn" onclick="copyRefWithFeedback()" style="background:linear-gradient(135deg, #ff8c42, #ffa84d);color:#fff;border:none;padding:12px 20px;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(255, 140, 66, 0.3);white-space:nowrap;flex-shrink:0;z-index:10;">Copy</button>
+            <button type="button" id="ref-copy-btn" onclick="copyRefWithFeedback()" style="background:linear-gradient(135deg, #ff8c42, #ffa84d);color:#fff;border:none;padding:12px 20px;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(255, 140, 66, 0.3);white-space:nowrap;flex-shrink:0;z-index:10;">Copy</button>
           </div>
           <p class="ref-link-hint-new" style="font-size:11px;color:rgba(255, 255, 255, 0.8);text-align:center;margin:0;margin-top:8px;">Share with friends to earn commissions</p>
         </div>
@@ -1025,7 +1025,7 @@ input[type="password"]{padding-right:40px;}
         <div style="font-size:10px;color:#ffa84d;margin-bottom:8px;text-transform:uppercase;font-weight:800;letter-spacing:0.5px;">YOUR REFERRAL LINK</div>
         <div style="display:flex;gap:8px;align-items:center;">
           <input type="text" id="profile-referral-link" readonly style="flex:1;background:#ffffff;border:1px solid #ddd;padding:10px;font-size:10px;font-family:'Courier New',Courier,monospace;color:#333;border-radius:6px;" value="">
-          <button id="profile-copy-btn" onclick="copyProfileReferralLinkWithFeedback()" style="background:linear-gradient(135deg, #ff8c42, #ffa84d);border:none;padding:10px 18px;font-size:11px;font-weight:800;color:white;cursor:pointer;border-radius:6px;transition:all 0.3s ease;box-shadow:0 4px 12px rgba(255, 140, 66, 0.3);white-space:nowrap;flex-shrink:0;z-index:10;">Copy</button>
+          <button type="button" id="profile-copy-btn" onclick="copyProfileReferralLinkWithFeedback()" style="background:linear-gradient(135deg, #ff8c42, #ffa84d);border:none;padding:10px 18px;font-size:11px;font-weight:800;color:white;cursor:pointer;border-radius:6px;transition:all 0.3s ease;box-shadow:0 4px 12px rgba(255, 140, 66, 0.3);white-space:nowrap;flex-shrink:0;z-index:10;">Copy</button>
         </div>
       </div>
 
@@ -1421,12 +1421,64 @@ function copyProfileReferralLink() {
 }
 
 function copyProfileReferralLinkWithFeedback() {
-  const linkInput = document.getElementById('profile-referral-link');
-  const btn = document.getElementById('profile-copy-btn');
-  
-  if (linkInput && linkInput.value) {
-    navigator.clipboard.writeText(linkInput.value).then(() => {
-      // Visual feedback
+  try {
+    const linkInput = document.getElementById('profile-referral-link');
+    const btn = document.getElementById('profile-copy-btn');
+    
+    if (!linkInput) {
+      console.error('Profile input element not found');
+      return;
+    }
+    
+    const linkText = linkInput.value || '';
+    
+    if (!linkText) {
+      console.warn('Profile link is empty');
+      alert('Referral link not ready yet. Please try again.');
+      return;
+    }
+    
+    // Try navigator.clipboard first (modern browsers)
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(linkText).then(() => {
+        // Success - show feedback
+        if (btn) {
+          const originalText = btn.textContent;
+          btn.textContent = 'Copied!';
+          btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+          
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = 'linear-gradient(135deg, #ff8c42, #ffa84d)';
+          }, 2000);
+        }
+        
+        // Toast notification
+        const popup = document.getElementById('popup-banner');
+        if (popup) {
+          popup.textContent = 'Referral link copied!';
+          popup.classList.add('show');
+          setTimeout(() => popup.classList.remove('show'), 1500);
+        }
+      }).catch(err => {
+        console.error('Clipboard error:', err);
+        fallbackCopyProfile(linkInput, btn);
+      });
+    } else {
+      // Fallback for older browsers
+      fallbackCopyProfile(linkInput, btn);
+    }
+  } catch (error) {
+    console.error('Copy error:', error);
+  }
+}
+
+function fallbackCopyProfile(inputElement, btn) {
+  try {
+    inputElement.select();
+    document.execCommand('copy');
+    
+    if (btn) {
       const originalText = btn.textContent;
       btn.textContent = 'Copied!';
       btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
@@ -1435,15 +1487,17 @@ function copyProfileReferralLinkWithFeedback() {
         btn.textContent = originalText;
         btn.style.background = 'linear-gradient(135deg, #ff8c42, #ffa84d)';
       }, 2000);
-      
-      // Toast notification
-      const popup = document.getElementById('popup-banner');
-      if (popup) {
-        popup.textContent = 'Referral link copied to clipboard!';
-        popup.classList.add('show');
-        setTimeout(() => popup.classList.remove('show'), 1500);
-      }
-    });
+    }
+    
+    const popup = document.getElementById('popup-banner');
+    if (popup) {
+      popup.textContent = 'Referral link copied!';
+      popup.classList.add('show');
+      setTimeout(() => popup.classList.remove('show'), 1500);
+    }
+  } catch (error) {
+    console.error('Fallback copy error:', error);
+    alert('Failed to copy link. Please copy manually.');
   }
 }
 
@@ -1664,12 +1718,64 @@ function copyRef() {
 }
 
 function copyRefWithFeedback() {
-  const url = document.getElementById('ref-url-new');
-  const btn = document.getElementById('ref-copy-btn');
-  
-  if (url && url.value) {
-    navigator.clipboard.writeText(url.value).then(() => {
-      // Visual feedback
+  try {
+    const url = document.getElementById('ref-url-new');
+    const btn = document.getElementById('ref-copy-btn');
+    
+    if (!url) {
+      console.error('Input element not found');
+      return;
+    }
+    
+    const linkText = url.value || '';
+    
+    if (!linkText) {
+      console.warn('Link is empty');
+      alert('Referral link not ready yet. Please try again.');
+      return;
+    }
+    
+    // Try navigator.clipboard first (modern browsers)
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(linkText).then(() => {
+        // Success - show feedback
+        if (btn) {
+          const originalText = btn.textContent;
+          btn.textContent = 'Copied!';
+          btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+          
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = 'linear-gradient(135deg, #ff8c42, #ffa84d)';
+          }, 2000);
+        }
+        
+        // Toast notification
+        const popup = document.getElementById('popup-banner');
+        if (popup) {
+          popup.textContent = 'Referral link copied!';
+          popup.classList.add('show');
+          setTimeout(() => popup.classList.remove('show'), 1500);
+        }
+      }).catch(err => {
+        console.error('Clipboard error:', err);
+        fallbackCopy(url, btn);
+      });
+    } else {
+      // Fallback for older browsers
+      fallbackCopy(url, btn);
+    }
+  } catch (error) {
+    console.error('Copy error:', error);
+  }
+}
+
+function fallbackCopy(inputElement, btn) {
+  try {
+    inputElement.select();
+    document.execCommand('copy');
+    
+    if (btn) {
       const originalText = btn.textContent;
       btn.textContent = 'Copied!';
       btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
@@ -1678,15 +1784,17 @@ function copyRefWithFeedback() {
         btn.textContent = originalText;
         btn.style.background = 'linear-gradient(135deg, #ff8c42, #ffa84d)';
       }, 2000);
-      
-      // Toast notification
-      const popup = document.getElementById('popup-banner');
-      if (popup) {
-        popup.textContent = 'Referral link copied to clipboard!';
-        popup.classList.add('show');
-        setTimeout(() => popup.classList.remove('show'), 1500);
-      }
-    });
+    }
+    
+    const popup = document.getElementById('popup-banner');
+    if (popup) {
+      popup.textContent = 'Referral link copied!';
+      popup.classList.add('show');
+      setTimeout(() => popup.classList.remove('show'), 1500);
+    }
+  } catch (error) {
+    console.error('Fallback copy error:', error);
+    alert('Failed to copy link. Please copy manually.');
   }
 }
 
