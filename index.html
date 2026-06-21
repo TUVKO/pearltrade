@@ -678,7 +678,7 @@ input[type="password"]{padding-right:40px;}
         <!-- Earnings Card -->
         <div style="background:#f472b6;padding:10px;text-align:center;">
           <div style="font-size:9px;color:#fff;margin-bottom:4px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;">Earnings</div>
-          <div style="font-size:10px;font-weight:800;color:#fff;font-family:'Courier New',Courier,monospace;" id="stat-referral-total">UGX 0</div>
+          <div style="font-size:10px;font-weight:800;color:#fff;font-family:'Courier New',Courier,monospace;" id="stat-total-earnings-box">UGX 0</div>
         </div>
       </div>
 
@@ -1789,25 +1789,33 @@ function updateBalanceUI() {
   const balance = currentUser.balance || 0;
   const withdrawn = currentUser.withdrawn || 0;
   const referrals = currentUser.referrals || {};
-  const activeInvestment = currentUser.activeInvestment || {};
+  const transactions = currentUser.transactions || {};
   
-  // Calculate total referral earnings
+  // Calculate total referral earnings (EARNINGS box)
   let totalReferralEarnings = 0;
   Object.values(referrals).forEach(ref => {
     totalReferralEarnings += (ref.bonus || 0);
   });
   
-  // Calculate daily profits from active investment
-  let dailyProfits = activeInvestment.profitAccumulated || 0;
+  // Calculate daily profits by summing all 'Profit' type transactions
+  let totalDailyProfits = 0;
+  Object.values(transactions).forEach(tx => {
+    if (tx.type === 'Profit' && tx.status === 'completed') {
+      totalDailyProfits += (tx.amount || 0);
+    }
+  });
   
-  // Calculate total earnings (daily profits + referral bonuses + any platform bonuses)
-  let totalEarnings = dailyProfits + totalReferralEarnings;
+  // Get registration bonus received (4000 UGX for all users)
+  const registrationBonus = currentUser.registrationBonusReceived || 4000;
+  
+  // Calculate total earnings (registration bonus + daily profits + referral bonuses)
+  let totalEarnings = registrationBonus + totalDailyProfits + totalReferralEarnings;
   
   document.getElementById('stat-stake').textContent = fmt(stake);
   document.getElementById('stat-balance').textContent = fmt(balance);
   document.getElementById('stat-withdrawn').textContent = fmt(withdrawn);
-  document.getElementById('stat-referral-total').textContent = fmt(totalReferralEarnings);
   document.getElementById('stat-total-earnings').textContent = fmt(totalEarnings);
+  document.getElementById('stat-total-earnings-box').textContent = fmt(totalReferralEarnings);
   document.getElementById('reinvest-balance-display').textContent = fmt(balance);
   updateActiveInvestmentDisplay();
 }
@@ -2539,7 +2547,7 @@ async function doRegister() {
   const newUser = {
     username, password, country, phone: fullPhone, stake: 0, balance: 4000, withdrawn: 0, refEarned: 0,
     activated: false, locked: false, referredBy: refCode, joinedDate: new Date().getFullYear().toString(),
-    lastProfitDate: todayKey,
+    lastProfitDate: todayKey, registrationBonusReceived: 4000,
     transactions: {},
     referrals: {}, deposits: {}, activeInvestment: null
   };
