@@ -900,13 +900,13 @@ input[type="password"]{padding-right:40px;}
         </div>
         
         <!-- Referral Link -->
-        <div class="ref-card-new">
-          <div class="ref-card-title-new">Share Your Code</div>
-          <div class="ref-link-box-new">
-            <input type="text" class="ref-link-input-new" id="ref-url-new" readonly>
+        <div class="ref-card-new" style="background:linear-gradient(135deg, rgba(255, 140, 66, 0.2), rgba(255, 168, 77, 0.2));border:2px solid rgba(255, 140, 66, 0.4);padding:16px;border-radius:12px;">
+          <div class="ref-card-title-new" style="color:#ffa84d;font-size:14px;font-weight:800;margin-bottom:12px;">📋 Share Your Code</div>
+          <div class="ref-link-box-new" style="display:flex;gap:8px;align-items:stretch;margin-bottom:12px;">
+            <input type="text" class="ref-link-input-new" id="ref-url-new" readonly style="flex:1;background:#ffffff;padding:12px;border:1px solid #ddd;border-radius:8px;font-family:'Courier New',monospace;font-size:11px;color:#333;">
+            <button class="ref-copy-btn-new" id="ref-copy-btn" onclick="copyRefWithFeedback()" style="background:linear-gradient(135deg, #ff8c42, #ffa84d);color:#fff;border:none;padding:12px 18px;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(255, 140, 66, 0.3);white-space:nowrap;">📋 Copy</button>
           </div>
-          <button class="ref-copy-btn-new" onclick="copyRef()">Copy Link</button>
-          <p class="ref-link-hint-new">Share with friends to earn</p>
+          <p class="ref-link-hint-new" style="font-size:11px;color:rgba(255, 255, 255, 0.8);text-align:center;margin:0;">Share with friends to earn commissions</p>
         </div>
         
         <!-- Commission Rates -->
@@ -1021,11 +1021,11 @@ input[type="password"]{padding-right:40px;}
       </div>
 
       <!-- Referral Link Section -->
-      <div style="background:#f0faf7;border:1px solid #dceee9;border-radius:0;padding:12px;margin-top:12px;">
-        <div style="font-size:9px;color:#10b981;margin-bottom:6px;text-transform:uppercase;font-weight:700;">Your Referral Link</div>
-        <div style="display:flex;gap:6px;align-items:center;">
-          <input type="text" id="profile-referral-link" readonly style="flex:1;background:#ffffff;border:1px solid #dceee9;padding:8px;font-size:10px;font-family:'Courier New',Courier,monospace;color:#333;border-radius:0;" value="">
-          <button style="background:#10b981;border:none;padding:8px 12px;font-size:10px;font-weight:700;color:white;cursor:pointer;border-radius:0;" onclick="copyProfileReferralLink()">Copy</button>
+      <div style="background:linear-gradient(135deg, rgba(255, 140, 66, 0.15), rgba(255, 168, 77, 0.15));border:2px solid rgba(255, 140, 66, 0.3);border-radius:8px;padding:14px;margin-top:12px;">
+        <div style="font-size:10px;color:#ffa84d;margin-bottom:8px;text-transform:uppercase;font-weight:800;letter-spacing:0.5px;">📋 Your Referral Link</div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input type="text" id="profile-referral-link" readonly style="flex:1;background:#ffffff;border:1px solid #ddd;padding:10px;font-size:10px;font-family:'Courier New',Courier,monospace;color:#333;border-radius:6px;" value="">
+          <button id="profile-copy-btn" style="background:linear-gradient(135deg, #ff8c42, #ffa84d);border:none;padding:10px 16px;font-size:11px;font-weight:800;color:white;cursor:pointer;border-radius:6px;transition:all 0.3s ease;box-shadow:0 4px 12px rgba(255, 140, 66, 0.3);display:flex;align-items:center;gap:6px;white-space:nowrap;" onclick="copyProfileReferralLinkWithFeedback()">📋 Copy</button>
         </div>
       </div>
 
@@ -1420,6 +1420,33 @@ function copyProfileReferralLink() {
   }
 }
 
+function copyProfileReferralLinkWithFeedback() {
+  const linkInput = document.getElementById('profile-referral-link');
+  const btn = document.getElementById('profile-copy-btn');
+  
+  if (linkInput && linkInput.value) {
+    navigator.clipboard.writeText(linkInput.value).then(() => {
+      // Visual feedback
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '✅ Copied!';
+      btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+      
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style.background = 'linear-gradient(135deg, #ff8c42, #ffa84d)';
+      }, 2000);
+      
+      // Toast notification
+      const popup = document.getElementById('popup-banner');
+      if (popup) {
+        popup.textContent = '✅ Referral link copied to clipboard!';
+        popup.classList.add('show');
+        setTimeout(() => popup.classList.remove('show'), 1500);
+      }
+    });
+  }
+}
+
 async function openForgotPasswordWhatsApp() {
   try {
     const snap = await db.ref('settings/waSupport').get();
@@ -1632,6 +1659,33 @@ function copyRef() {
   if (url && url.value) {
     navigator.clipboard.writeText(url.value).then(() => {
       // Silent copy - no toast
+    });
+  }
+}
+
+function copyRefWithFeedback() {
+  const url = document.getElementById('ref-url-new');
+  const btn = document.getElementById('ref-copy-btn');
+  
+  if (url && url.value) {
+    navigator.clipboard.writeText(url.value).then(() => {
+      // Visual feedback
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '✅ Copied!';
+      btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+      
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style.background = 'linear-gradient(135deg, #ff8c42, #ffa84d)';
+      }, 2000);
+      
+      // Toast notification
+      const popup = document.getElementById('popup-banner');
+      if (popup) {
+        popup.textContent = '✅ Referral link copied to clipboard!';
+        popup.classList.add('show');
+        setTimeout(() => popup.classList.remove('show'), 1500);
+      }
     });
   }
 }
